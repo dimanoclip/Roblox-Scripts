@@ -1,25 +1,4 @@
-local msg = {}
-msg.Notify = function(title, text, dur)
-    if dur == nil then
-        game.StarterGui:SetCore("SendNotification", {
-            Title = tostring(title),
-            Text = tostring(text),
-            Duration = 1
-        })
-    elseif dur < 0 then
-        game.StarterGui:SetCore("SendNotification", {
-            Title = tostring(title),
-            Text = tostring(text),
-            Duration = math.huge
-        })
-    else
-        game.StarterGui:SetCore("SendNotification", {
-            Title = tostring(title),
-            Text = tostring(text),
-            Duration = dur
-        })
-    end
-end
+local msg = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/messages.lua"))()
 game.UserInputService.InputBegan:connect(function(a,b)
 	if a.KeyCode == Enum.KeyCode.F1 then
 		for i=1,15 do task.wait()
@@ -56,7 +35,7 @@ game.UserInputService.InputBegan:connect(function(a,b)
 			game:GetService("ReplicatedStorage").InventoryEvent:FireServer("Tiger Pill", "Add")
 			game:GetService("ReplicatedStorage").InventoryEvent:FireServer("Hawk Pill", "Add")
 		end
-		msg.Notify("Pills", "Given to inv, reset.")
+		msg.Notify("Pills", "Gave to inv, reset.")
 	elseif a.KeyCode == Enum.KeyCode.F5 then
 		game:GetService("ReplicatedStorage").InventoryEvent:FireServer("Demon Charm", "Add")
 		game:GetService("ReplicatedStorage").InventoryEvent:FireServer("Red Qi Ring", "Add")
@@ -79,12 +58,7 @@ game.UserInputService.InputBegan:connect(function(a,b)
 		game:GetService("ReplicatedStorage").InventoryEvent:FireServer("Fake World", "Add")
 		game:GetService("ReplicatedStorage").InventoryEvent:FireServer("Shadow's Descent", "Add")
 		game:GetService("ReplicatedStorage").InventoryEvent:FireServer("Time Manipulation - Incomplete", "Add")
-		game:GetService("ReplicatedStorage").InventoryEvent:FireServer("", "Add")
-		game:GetService("ReplicatedStorage").InventoryEvent:FireServer("", "Add")
-		game:GetService("ReplicatedStorage").InventoryEvent:FireServer("", "Add")
-		game:GetService("ReplicatedStorage").InventoryEvent:FireServer("", "Add")
-		game:GetService("ReplicatedStorage").InventoryEvent:FireServer("", "Add")
-		msg.Notify("Accesories", "Given 2")
+		msg.Notify("Accesories", "Gave some shit")
 	end
 end)
 
