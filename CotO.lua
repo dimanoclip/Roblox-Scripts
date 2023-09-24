@@ -55,7 +55,7 @@ while task.wait() do
 		end
 		rs:WaitForChild("ManaGain"):FireServer()
 		task.wait(3)
-		spawn(function()
+		task.spawn(function()
 			while stats.ManaPerSec.Value ~= 0 do task.wait()
 				if stats.Mana.Value >= stats.RequiredMana.Value then
 					ranking = true
