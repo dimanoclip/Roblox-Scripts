@@ -10,6 +10,7 @@ local rs = game:GetService("ReplicatedStorage")
 
 local settings = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/1/main/settings.lua"))()
 local wh = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/1/main/wh.lua"))()
+local conv = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/convs.lua"))()
 
 -- Vars
 
@@ -18,7 +19,6 @@ local data = {
 }
 
 
-local filename = "UselessData.json"
 local pp,LP = game.Players,game.Players.LocalPlayer
 local stats = LP.leaderstats
 local ranking,sbl = false,false
@@ -36,7 +36,7 @@ pp.PlayerRemoving:Connect(function(ply)
 		if stats.BestLevel.Value < 500 then data.BestLevel = stats.BestLevel.Value
 		else data.BestLevel = stats.Level.Value end
 		data.Level = stats.Level.Value
-		settings.save(filename, data)
+		settings.save(nil, data)
 	end
 end)
 
@@ -45,9 +45,9 @@ end)
 while task.wait() do
 	if stats.ManaPerSec.Value == 0 and ranking == false then
 		if stats.BestLevel.Value >= 500 then
-			if settings.check(filename) then
-				if settings.get(filename).BestLevel >= stats.Level.Value then
-					stats.BestLevel.Value = settings.get(filename).BestLevel
+			if settings.check() then
+				if settings.get().BestLevel >= stats.Level.Value then
+					stats.BestLevel.Value = settings.get().BestLevel
 				else stats.BestLevel.Value = stats.Level.Value end
 			else stats.BestLevel.Value = stats.Level.Value
 			end
@@ -68,6 +68,7 @@ while task.wait() do
 						if sbl then stats.BestLevel.Value = stats.Level.Value end
 						rs:WaitForChild("Sanctify"):FireServer()
 						rs:WaitForChild("Rebirth"):FireServer()
+						wh.Send(nil, "Rebith", string.format("BestLevel = %s\nRebirths' multi = %s", stats.BestLevel.Value, conv.ToLetters(stats.RebirthMultiplier.Value)))
 					end
 					ranking = false
 				end
