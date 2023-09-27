@@ -14,25 +14,19 @@ local conv = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanona
 
 -- Vars
 
-local data = {
-
-}
-
-
 local pp,LP = game.Players,game.Players.LocalPlayer
 local stats = LP.leaderstats
 local ranking,sbl = false,false
-local asc,sanc = stats.Ascension.Value,stats.SanctificationName.Value
+
+local data = {Player = LP.Name}
 
 -- AntiAFK
 
 LP.Idled:Connect(function() vu:CaptureController(); vu:ClickButton2(Vector2.new()) end)
 
 -- Events
-
 pp.PlayerRemoving:Connect(function(ply)
 	if ply == LP then
-		data.Player = ply.Name
 		if stats.BestLevel.Value < 500 then data.BestLevel = stats.BestLevel.Value
 		else data.BestLevel = stats.Level.Value end
 		data.Level = stats.Level.Value
