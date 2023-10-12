@@ -18,6 +18,7 @@ local distanceVisualizer = nil
 local isRunning = false
 local playing = false
 local notifyparried = false
+local autogg = true
 local sliderValue = 20
 local PlayerGui = localPlayer:WaitForChild("PlayerGui")
 local Hotbar = PlayerGui:WaitForChild("Hotbar")
@@ -30,8 +31,8 @@ local function isPlayerOnMobile()
     return UserInputService.TouchEnabled and not (UserInputService.KeyboardEnabled or UserInputService.GamepadEnabled)
 end
 
-local RayfieldURL = isPlayerOnMobile() and 
-                    'https://raw.githubusercontent.com/Hosvile/Refinement/main/MC%3AArrayfield%20Library' or 
+local RayfieldURL = isPlayerOnMobile() and
+                    'https://raw.githubusercontent.com/Hosvile/Refinement/main/MC%3AArrayfield%20Library' or
                     'https://sirius.menu/rayfield'
 
 local Rayfield = loadstring(game:HttpGet(RayfieldURL))()
@@ -39,31 +40,12 @@ local Rayfield = loadstring(game:HttpGet(RayfieldURL))()
 
 local Window = Rayfield:CreateWindow({
    Name = "Blade Ball",
-   LoadingTitle = "Inferno Scripts",
-   LoadingSubtitle = "by InfernoKarl",
-   ConfigurationSaving = {
-      Enabled = false,
-      FolderName = "Inferno Scripts",
-      FileName = "Inferno Scripts"
-   },
-   Discord = {
-      Enabled = false,
-      Invite = "hNX8VxcjMF",
-      RememberJoins = true
-   },
-   KeySystem = false,
-   KeySettings = {
-      Title = "Inferno Scripts",
-      Subtitle = "Key System",
-      Note = "Join the discord (discord.gg/hNX8VxcjMF)",
-      FileName = "InfernoKey",
-      SaveKey = true,
-      GrabKeyFromSite = false,
-      Key = "Hello"
-   }
+   LoadingTitle = "Blade Ball",
+   LoadingSubtitle = "Why not?",
 })
 
 local MainTab = Window:CreateTab("Main")
+
 
 if character then
     print("Character found.")
@@ -81,9 +63,11 @@ local function notify(title, content, duration)
     })
 end
 local function sendmsg(text:string)
-    task.wait(1.15)
-    replicatedStorage:WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest"):FireServer(text, "All")
-end    
+    character.PrimaryPart.Anchored = true; character.PrimaryPart.Velocity = Vector3.new(0,0,0)
+    task.wait(1)
+    replicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(text, "All")
+    character.PrimaryPart.Anchored = false
+end
 
 local function chooseNewFocusedBall()
     local balls = ballsFolder:GetChildren()
@@ -98,7 +82,7 @@ local function chooseNewFocusedBall()
             break
         end
     end
-    
+
     if focusedBall == nil then
         wait(1)
         chooseNewFocusedBall()
@@ -236,7 +220,6 @@ end
 
 
 local AutoParrySection = MainTab:CreateSection("Auto Parry")
-
 local AutoParryToggle = MainTab:CreateToggle({
     Name = "Auto Parry",
     CurrentValue = false,
@@ -271,3 +254,33 @@ local ToggleParryKB = MainTab:CreateKeybind({
    AutoParryToggle:Set(not AutoParryToggle.CurrentValue)
    end,
 })
+
+local Misc = MainTab:CreateSection("Misc")
+local AutoVote = MainTab:CreateDropdown({
+    Name = "Auto Vote",
+    Options = {"ffa","2t","4t"},
+    CurrentOption = {"ffa"},
+    MultipleOptions = false,
+    Flag = "AutoVoteFlag",
+ })
+local AutoGGToggle = MainTab:CreateToggle({
+    Name = "AutoGG",
+    CurrentValue = true,
+    Flag = "AutoGGFlag",
+    Callback = function(Value)
+        autogg = Value
+    end,
+})
+
+PlayerGui.voter.Changed:Connect(function(setting)
+	if setting == "Enabled" and game:GetService("Players").LocalPlayer.PlayerGui.voter[setting] == true then
+        task.wait()
+        replicatedStorage.Remotes.UpdateVotes:FireServer(AutoVote.CurrentOption[1])
+	end
+end)
+
+workspace.Alive.ChildRemoved:Connect(function(obj)
+    if obj.Name == localPlayer.Name and autogg then
+        sendmsg("gg")
+    end
+end)
