@@ -1,4 +1,6 @@
 -- https://www.roblox.com/games/13802578990
+local PlaceId = 13802578990
+if game.PlaceId ~= PlaceId then warn(string.format("Wrong game detected. %s expected, got %s", PlaceId, game.PlaceId)) return end
 local Farm = true
 local FSpot = "Forest_5"
 local Players = game.Players

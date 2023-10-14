@@ -1,4 +1,6 @@
 -- https://www.roblox.com/games/13772394625
+local PlaceId = 13772394625
+if game.PlaceId ~= PlaceId then warn(string.format("Wrong game detected. %s expected, got %s", PlaceId, game.PlaceId)) return end
 local workspace = game:GetService("Workspace")
 local players = game:GetService("Players")
 local replicatedStorage = game:GetService("ReplicatedStorage")

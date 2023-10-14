@@ -1,4 +1,6 @@
 -- https://www.roblox.com/games/14277384007
+local PlaceId = 14277384007
+if game.PlaceId ~= PlaceId then warn(string.format("Wrong game detected. %s expected, got %s", PlaceId, game.PlaceId)) return end
 -------------------------------- VARS --------------------------------
 local wh = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/1/main/wh.lua"))()
 local msg = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/1/main/messages.lua"))()

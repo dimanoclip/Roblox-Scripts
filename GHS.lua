@@ -1,4 +1,6 @@
 -- https://www.roblox.com/games/13122746147
+local PlaceId = 13122746147
+if game.PlaceId ~= PlaceId then warn(string.format("Wrong game detected. %s expected, got %s", PlaceId, game.PlaceId)) return end
 local eggams = {1, 3, 8}
 local plyw,eggs,eggam = nil,false,eggams[1]
 if game.Players.LocalPlayer.PlayerGui.PetsGui.PetAnimation:FindFirstChild("AnimationExample") then game.Players.LocalPlayer.PlayerGui.PetsGui.PetAnimation:FindFirstChild("AnimationExample"):Remove() end

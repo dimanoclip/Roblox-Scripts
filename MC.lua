@@ -1,7 +1,9 @@
 -- https://www.roblox.com/games/13645439359
+local PlaceId = 13645439359
+if game.PlaceId ~= PlaceId then warn(string.format("Wrong game detected. %s expected, got %s", PlaceId, game.PlaceId)) return end
 -- Ebanina
 local conv = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/1/main/convs.lua"))()
-game.Players.LocalPlayer.Idled:connect(function() game:GetService("VirtualUser"):CaptureController(); game:GetService("VirtualUser"):ClickButton2(Vector2.new()) end)
+game.Players.LocalPlayer.Idled:Connect(function() game:GetService("VirtualUser"):CaptureController(); game:GetService("VirtualUser"):ClickButton2(Vector2.new()) end)
 while true do task.wait()
     pcall(function()
         if game.Players.LocalPlayer.Character:FindFirstChild("Meditate") ~= nil then

@@ -1,4 +1,6 @@
 -- https://www.roblox.com/games/11634325399
+local PlaceId = 11634325399
+if game.PlaceId ~= PlaceId then warn(string.format("Wrong game detected. %s expected, got %s", PlaceId, game.PlaceId)) return end
 -- Some Features
 local conv = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/1/main/convs.lua"))()
 game.Players.LocalPlayer.Idled:connect(function() game:GetService("VirtualUser"):CaptureController(); game:GetService("VirtualUser"):ClickButton2(Vector2.new()) end)

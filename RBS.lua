@@ -1,4 +1,6 @@
 -- https://www.roblox.com/games/13820774692
+local PlaceId = 13820774692
+if game.PlaceId ~= PlaceId then warn(string.format("Wrong game detected. %s expected, got %s", PlaceId, game.PlaceId)) return end
 local vim = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/1/main/virtinp.lua"))()
 spawn(function()
 	while true do task.wait()

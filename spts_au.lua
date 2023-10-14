@@ -1,4 +1,6 @@
 -- https://www.roblox.com/games/12761410397
+local PlaceId = 12761410397
+if game.PlaceId ~= PlaceId then warn(string.format("Wrong game detected. %s expected, got %s", PlaceId, game.PlaceId)) return end
 local workspace = game:GetService("Workspace")
 local players = game:GetService("Players")
 local replicatedStorage = game:GetService("ReplicatedStorage")
@@ -6,9 +8,10 @@ local localPlayer = players.LocalPlayer
 local UserInputService = game:GetService("UserInputService")
 local character = localPlayer.Character or localPlayer.CharacterAdded:Wait()
 local PlayerGui = localPlayer:WaitForChild("PlayerGui")
-local autofs,autobt,autopp,farmingpp,autows,autojf,autotp,savepos = false,false,false,false,false,false,false,nil
-localPlayer.Idled:Connect(function() game.VirtualUser:CaptureController(); game.VirtualUser:ClickButton2(Vector2.new()) end)
+local autofs,autobt,autopp,farmingpp,autows,autojf,autotp,savedpos = false,false,false,false,false,false,false,nil
+if character then else return end
 
+localPlayer.Idled:Connect(function() game:GetService("VirtualUser"):CaptureController(); game:GetService("VirtualUser"):ClickButton2(Vector2.new()) end)
 
 local function isPlayerOnMobile()
     return UserInputService.TouchEnabled and not (UserInputService.KeyboardEnabled or UserInputService.GamepadEnabled)
@@ -20,7 +23,6 @@ local RayfieldURL = isPlayerOnMobile() and
 
 local Rayfield = loadstring(game:HttpGet(RayfieldURL))()
 
-
 local Window = Rayfield:CreateWindow({
    Name = "SPTS:AU",
    LoadingTitle = "SPTS:AU",
@@ -28,8 +30,6 @@ local Window = Rayfield:CreateWindow({
 })
 
 local MainTab = Window:CreateTab("Main")
-
-if character then else return end
 
 local function notify(title, content, duration)
     Rayfield:Notify({
@@ -47,9 +47,9 @@ local function sendmsg(text:string)
 end
 
 
-local AutoFarmsSection = MainTab:CreateSection("Auto Farms")
+local AutoFarmsSection = MainTab:CreateSection("Auto Grinding")
 local AutoFist = MainTab:CreateToggle({
-    Name = "Auto Fist Strength",
+    Name = "Auto FS",
     CurrentValue = false,
     Flag = "AutoFSFlag",
     Callback = function(Value)
@@ -57,19 +57,30 @@ local AutoFist = MainTab:CreateToggle({
     end,
 })
 local AutoBody = MainTab:CreateToggle({
-    Name = "Auto Body Toughness",
+    Name = "Auto BT (R.O.D. included)",
     CurrentValue = false,
     Flag = "AutoBTFlag",
     Callback = function(Value)
         autobt = Value
+        savedpos = localPlayer.Character.PrimaryPart.CFrame
     end,
 })
 local AutoPP = MainTab:CreateToggle({
-    Name = "Auto Psychic Power",
+    Name = "Auto PS",
     CurrentValue = false,
     Flag = "AutoPPFlag",
     Callback = function(Value)
         autopp = Value
+    end,
+})
+
+local AutoTP = MainTab:CreateToggle({
+    Name = "Return On Death | Risky",
+    CurrentValue = false,
+    Flag = "AutoTPFlag",
+    Callback = function(Value)
+        savedpos = localPlayer.Character.PrimaryPart.CFrame
+        autotp = Value
     end,
 })
 
@@ -112,19 +123,29 @@ local AutoPP = MainTab:CreateToggle({
 task.spawn(function()
     while task.wait() do
         if autofs then
+            if localPlayer.Backpack:FindFirstChild("FistStrength") then localPlayer.Backpack:FindFirstChild("FistStrength").Parent = localPlayer.Character end
             replicatedStorage.RemoteEvents.FistStrength:FireServer()
+            localPlayer.Character:FindFirstChild("FistStrength"):Activate()
         end
         if autobt then
+            localPlayer.Character:WaitForChild("HumanoidRootPart")
+            if localPlayer.Character.PrimaryPart.CFrame ~= savedpos then localPlayer.Character:WaitForChild("HumanoidRootPart") localPlayer.Character.PrimaryPart.CFrame = savedpos end
             replicatedStorage.RemoteEvents.Pushup:FireServer()
         end
         if farmingpp == false and autopp then
+            if localPlayer.Backpack:FindFirstChild("PsychicPower") then localPlayer.Backpack:FindFirstChild("PsychicPower").Parent = localPlayer.Character end
             replicatedStorage.RemoteEvents.TrainPsychic:FireServer(true)
             farmingpp = true
+        end
+        if autotp then
+            localPlayer.Character:WaitForChild("HumanoidRootPart")
+            if localPlayer.Character.PrimaryPart.CFrame ~= savedpos then localPlayer.Character:WaitForChild("HumanoidRootPart") localPlayer.Character.PrimaryPart.CFrame = savedpos end
         end
     end
 end)
 game.UserInputService.InputBegan:Connect(function(a,b)
-    if a.KeyCode == Enum.KeyCode.W or a.KeyCode == Enum.KeyCode.A or a.KeyCode == Enum.KeyCode.S or a.KeyCode == Enum.KeyCode.D or a.KeyCode == Enum.KeyCode.Space then
+    if (a.KeyCode == Enum.KeyCode.W or a.KeyCode == Enum.KeyCode.A or a.KeyCode == Enum.KeyCode.S or a.KeyCode == Enum.KeyCode.D or a.KeyCode == Enum.KeyCode.Space) and farmingpp then
+        if localPlayer.Character:FindFirstChild("") then character:FindFirstChild("PsychicPower").Parent = localPlayer.Backpack end
         replicatedStorage.RemoteEvents.TrainPsychic:FireServer(false)
         farmingpp = false
     end

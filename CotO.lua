@@ -1,4 +1,6 @@
 -- https://www.roblox.com/games/14305177026
+local PlaceId = 14305177026
+if game.PlaceId ~= PlaceId then warn(string.format("Wrong game detected. %s expected, got %s", PlaceId, game.PlaceId)) return end
 
 -- Services
 

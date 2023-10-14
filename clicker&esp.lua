@@ -1,6 +1,4 @@
-if not game:IsLoaded() then
-	game.Loaded:Wait()
-end
+if not game:IsLoaded() then game.Loaded:Wait() end
 --Press F1 To Toggle ESP | F3 To Toggle Clicker--
 local msg = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/1/main/messages.lua"))()
 msg.Notify("Binds", "F1 - ESP\nF2 - Clicker")

@@ -1,4 +1,6 @@
-_G = {}
+-- https://www.roblox.com/games/4566572536
+local PlaceId = 4566572536
+if game.PlaceId ~= PlaceId then warn(string.format("Wrong game detected. %s expected, got %s", PlaceId, game.PlaceId)) return end
 function getdist(pos)
     return math.floor(((game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")).Position - pos).magnitude)
 end
@@ -34,7 +36,7 @@ function getcars()
 end
 local holding,free
 local uis = game:GetService("UserInputService")
-local holdingw,holdings,holdingctrl,holdingalt = false
+local holdingw,holdings,holdingctrl = false,false,false
 local msg = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/1/main/messages.lua"))()
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/1/main/KavoUI.lua"))()
 local gui = Library.CreateLib("Vehicle Legends", "Useless")
