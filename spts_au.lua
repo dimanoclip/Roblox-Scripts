@@ -40,7 +40,6 @@ local function collectquests()
             for i=1,15 do task.wait() replicatedStorage.RemoteEvents.DailyQuestClaim:FireServer(i, aim, type)
     end end end
 end
-collectquests()
 
 local AutoFarmsSection = MainTab:CreateSection("Grinding Stuff")
 local AutoFist = MainTab:CreateToggle({
@@ -132,7 +131,7 @@ local AutoMulti = MainTab:CreateDropdown({
     MultipleOptions = false,
     Flag = "AutoUpgradeFlag",
  })
-
+ collectquests()
 -- local KeyBinds = MainTab:CreateSection("KeyBinds")
 -- local SpamParry = MainTab:CreateKeybind({
 --     Name = "Spam Parry (Hold)",
