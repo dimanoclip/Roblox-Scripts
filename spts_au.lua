@@ -35,8 +35,8 @@ local function notify(title, content, duration)
 end
 local function unalltools() for i,v in pairs(localPlayer.Character:GetChildren()) do if v:IsA("Tool") then v.Parent = localPlayer.Backpack end end end
 local function collectquests()
-    for _1,aim in pairs({"FistStrength", "BodyToughness", "PsychicPower","JumpForce","MovementSpeed"}) do
-        for _2,type in pairs({"Daily", "Weekly", "Monthly"}) do
+    for _1,type in pairs({"Daily", "Weekly", "Monthly"}) do
+        for _2,aim in pairs({"FistStrength", "BodyToughness", "PsychicPower","JumpForce","MovementSpeed"}) do
             for i=1,15 do task.wait() replicatedStorage.RemoteEvents.DailyQuestClaim:FireServer(i, aim, type)
     end end end
 end
@@ -75,12 +75,12 @@ local AutoMS = MainTab:CreateToggle({
     Flag = "AutoWSFlag",
     Callback = function(Value)
         autows = Value
-        if Value then humanoid.WalkSpeed = 0.5 end
         while autows do task.wait()
-            vinp.PressKey(119, 0.25)
-            vinp.PressKey(97, 0.25)
-            vinp.PressKey(115, 0.25)
-            vinp.PressKey(100, 0.25)
+            humanoid.WalkSpeed = 0.5
+            vinp.PressKey(119, 0.25); humanoid.WalkSpeed = 0.5
+            vinp.PressKey(97, 0.25); humanoid.WalkSpeed = 0.5
+            vinp.PressKey(115, 0.25); humanoid.WalkSpeed = 0.5
+            vinp.PressKey(100, 0.25); humanoid.WalkSpeed = 0.5
         end
     end,
 })
@@ -89,14 +89,10 @@ local AutoJF = MainTab:CreateToggle({
     CurrentValue = false,
     Flag = "AutoJFFlag",
     Callback = function(Value)
-        if Value then humanoid:ChangeState(Enum.HumanoidStateType.Jumping) end task.wait(0.1)
-        localPlayer.Character.PrimaryPart.Anchored = Value
-        task.wait()
+        if Value then humanoid:ChangeState(Enum.HumanoidStateType.Jumping) end
+        task.wait(0.1);localPlayer.Character.PrimaryPart.Anchored = Value;task.wait()
         autojf = Value
-        while autojf do
-            replicatedStorage.RemoteEvents.Jumped:FireServer()
-            task.wait(0.25)
-        end
+        while autojf do task.wait(); replicatedStorage.RemoteEvents.Jumped:FireServer() end
     end,
 })
 local MiscSection = MainTab:CreateSection("Misc Stuff")
@@ -178,7 +174,7 @@ task.spawn(function()
             if localPlayer.Character.PrimaryPart.CFrame ~= savedpos then localPlayer.Character:WaitForChild("HumanoidRootPart") localPlayer.Character.PrimaryPart.CFrame = savedpos localPlayer.Character.PrimaryPart.Velocity = Vector3.new(0,0,0) end
         end
         if AutoMulti.CurrentOption[1] ~= "Off" then
-            game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("UpgradeMultiplier"):FireServer(AutoMulti.CurrentOption[1])
+            replicatedStorage.RemoteEvents.UpgradeMultiplier:FireServer(AutoMulti.CurrentOption[1])
         end
         if autofs then
             replicatedStorage.RemoteEvents.FistStrength:FireServer()
