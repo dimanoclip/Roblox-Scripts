@@ -17,7 +17,7 @@ localPlayer.Idled:Connect(function() game:GetService("VirtualUser"):CaptureContr
 local function isPlayerOnMobile()
     return UserInputService.TouchEnabled and not (UserInputService.KeyboardEnabled or UserInputService.GamepadEnabled)
 end
-local RayfieldURL = isPlayerOnMobile() and 'https://raw.githubusercontent.com/Hosvile/Refinement/main/MC%3AArrayfield%20Library' or 'https://sirius.menu/rayfield'
+local RayfieldURL = isPlayerOnMobile() and 'https://raw.githubusercontent.com/Hosvile/Refinement/main/MC%3AArrayfield%20Library' or 'https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/rayfield.lua'
 local Rayfield = loadstring(game:HttpGet(RayfieldURL))()
 local Window = Rayfield:CreateWindow({
    Name = "SPTS:AU",
