@@ -1,16 +1,16 @@
 --https://www.roblox.com/games/12014935450
 local PlaceId = 12014935450
 if game.PlaceId ~= PlaceId then warn(string.format("Wrong game detected. %s expected, got %s", PlaceId, game.PlaceId)) return end
---AntiAFK
-game:GetService('Players').LocalPlayer.Idled:Connect(function() game:GetService('VirtualUser'):CaptureController() game:GetService('VirtualUser'):ClickButton2(Vector2.new()) end)
 --Vars
 local pp,LP = game.Players,game.Players.LocalPlayer
 local char = LP.Character or LP.CharacterAdded():Wait()
 local hum = char:WaitForChild("Humanoid")
-local rep = game.ReplicatedStorage
-local remote = rep:WaitForChild("Remote")
+local rep,remote = game.ReplicatedStorage,game.ReplicatedStorage:WaitForChild("Remote")
+local vu = game:GetService("VirtualUser")
 --Libs
 local add = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/additional.lua"))()
+--AntiAFK
+LP.Idled:Connect(function() vu:CaptureController() vu:ClickButton2(Vector2.new()) end)
 --Main
 while task.wait() do
 	for i,v in pairs(game:GetService("Workspace").TrainingZones:children()) do
