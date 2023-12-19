@@ -13,6 +13,8 @@ local add = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanonam
 LP.Idled:Connect(function() vu:CaptureController() vu:ClickButton2(Vector2.new()) end)
 --Main
 while task.wait() do
+	remote:FireServer("Upgrade", "Fusion")
+	remote:FireServer("Upgrade", "Realm")
 	for i,v in pairs(game:GetService("Workspace").TrainingZones:children()) do
 		if v.Name ~= "Other" and v.Name ~= "Speed" then
 			for i1,v1 in pairs(v:children()) do
@@ -24,3 +26,4 @@ while task.wait() do
 	end
 	remote:FireServer("Train Speed")
 end
+loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua"))()
