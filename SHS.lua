@@ -21,9 +21,9 @@ task.spawn(function()
 		remote:FireServer("Time Quest", "Finished", "D3")
 		remote:FireServer("Time Quest", "Finished", "W3")
 		for i,v in pairs(game:GetService("Workspace").TrainingZones:children()) do
-			if v.Name ~= "Other" and v.Name ~= "Speed" then
+			if v.Name ~= "Other" and v.Name ~= "Speed" and v.Name ~= "Endurance" then
 				for i1,v1 in pairs(v:children()) do
-					if add.dist(v1.TrainingZone.Position) <= 15 and add.dontmoving(hum) then
+					if add.dist(v1.TrainingZone.Position) <= 15 and not add.moving(hum) then
 						remote:FireServer("Train", v.Name)
 					end
 				end
@@ -33,7 +33,7 @@ task.spawn(function()
 	end
 end)
 task.spawn(function()
-	while task.wait(1) do
+	while true do task.wait(5)
 		remote:FireServer("Upgrade", "Fusion")
 		remote:FireServer("Upgrade", "Realm")
 	end
