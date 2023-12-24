@@ -9,9 +9,15 @@ local rs,remote = game:GetService("ReplicatedStorage"),game:GetService("Replicat
 local vu = game:GetService("VirtualUser")
 --Libs
 local adds = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/additional.lua"))()
+local wh = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/wh.lua"))()
 --AntiAFK
 LP.Idled:Connect(function() vu:CaptureController() vu:ClickButton2(Vector2.new()) end)
 --Main
+local function stopanims()
+	for _,track in pairs(hum:GetPlayingAnimationTracks()) do
+		wh.Send("Anim", track.Name)
+	end
+end
 task.spawn(function()
 	remote:FireServer("Daily Draw", "VIP")
 	remote:FireServer("Daily Draw", "Free")
@@ -25,10 +31,11 @@ task.spawn(function()
 		remote:FireServer("Time Quest", "Finished", "D3")
 		remote:FireServer("Time Quest", "Finished", "W3")
 		for i,v in pairs(game:GetService("Workspace").TrainingZones:children()) do
-			if v.Name ~= "Other" and v.Name ~= "Speed" and v.Name ~= "Endurance" then
+			if v.Name ~= "Other" and v.Name ~= "Speed" then
 				for i1,v1 in pairs(v:children()) do
 					if adds.dist(v1.TrainingZone.Position) <= 15 and not adds.moving(hum) then
 						remote:FireServer("Train", v.Name)
+						stopanims()
 					end
 				end
 			end
