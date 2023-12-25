@@ -12,23 +12,26 @@ local adds = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanona
 --AntiAFK
 LP.Idled:Connect(function() vu:CaptureController() vu:ClickButton2(Vector2.new()) end)
 --Main
+local function stopanims()
+	for i,v in pairs(hum:GetPlayingAnimationTracks()) do
+		if v.Name == "Pushup" or string.find(v.Name, "Punch") then
+			v:Stop(0)
+		end
+	end
+end
 task.spawn(function()
 	remote:FireServer("Daily Draw", "VIP")
 	remote:FireServer("Daily Draw", "Free")
 end)
 task.spawn(function()
 	while task.wait() do
-		remote:FireServer("Time Quest", "Finished", "D1")
-		remote:FireServer("Time Quest", "Finished", "W1")
-		remote:FireServer("Time Quest", "Finished", "D2")
-		remote:FireServer("Time Quest", "Finished", "W2")
-		remote:FireServer("Time Quest", "Finished", "D3")
-		remote:FireServer("Time Quest", "Finished", "W3")
+		for i1,v in pairs({"D", "W"}) do for i2=1,3 do remote:FireServer("Time Quest", "Finished", v..tostring(i2)) end	end
 		for i,v in pairs(game:GetService("Workspace").TrainingZones:children()) do
 			if v.Name ~= "Other" and v.Name ~= "Speed" then
 				for i1,v1 in pairs(v:children()) do
 					if adds.dist(v1.TrainingZone.Position) <= 15 and not adds.moving(hum) then
 						remote:FireServer("Train", v.Name)
+						stopanims()
 					end
 				end
 			end
@@ -36,19 +39,3 @@ task.spawn(function()
 		remote:FireServer("Train Speed")
 	end
 end)
-task.spawn(function()
-	while true do task.wait(5)
-		remote:FireServer("Upgrade", "Fusion")
-		remote:FireServer("Upgrade", "Realm")
-	end
-end)
-
--- loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua"))()
-
--- for i,v in pairs(game:GetService("Workspace").ChestSpawns.Gem:children()) do
--- 	if v:FindFirstChild("GemChest") then
--- 		game.Players.LocalPlayer.Character.PrimaryPart.CFrame = v:FindFirstChild("GemChest").Frame.CFrame
--- 		v:FindFirstChild("GemChest").ProximityPrompt:InputHoldBegin()
--- 	end
--- 	task.wait(1)
--- end
