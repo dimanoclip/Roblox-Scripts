@@ -3,7 +3,7 @@ local PlaceId = 12014935450
 if game.PlaceId ~= PlaceId then warn(string.format("Wrong game detected. %s expected, got %s", PlaceId, game.PlaceId)) return end
 --Vars
 local pp,LP = game.Players,game.Players.LocalPlayer
-local char = LP.Character or LP.CharacterAdded:Wait()
+local char = LP.Character or LP.CharacterAdded:Wait() and LP.Character
 local hum = char:WaitForChild("Humanoid")
 local rs,remote = game:GetService("ReplicatedStorage"),game:GetService("ReplicatedStorage"):WaitForChild("Remote")
 local vu = game:GetService("VirtualUser")
