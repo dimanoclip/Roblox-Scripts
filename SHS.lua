@@ -25,11 +25,11 @@ task.spawn(function()
 end)
 task.spawn(function()
 	while task.wait() do
-		for i1,v in pairs({"D", "W"}) do for i2=1,3 do remote:FireServer("Time Quest", "Finished", v..tostring(i2)) end	end
+		for i,type in pairs({"D", "W"}) do for id=1,3 do remote:FireServer("Time Quest", "Finished", type..tostring(id)) end end
 		for i,v in pairs(game:GetService("Workspace").TrainingZones:children()) do
 			if v.Name ~= "Other" and v.Name ~= "Speed" then
 				for i1,v1 in pairs(v:children()) do
-					if adds.dist(v1.TrainingZone.Position) <= 15 and not adds.moving(hum) then
+					if adds.dist_to(v1.TrainingZone.Position) <= 15 and not adds.is_moving(hum) then
 						remote:FireServer("Train", v.Name)
 						stopanims()
 					end
