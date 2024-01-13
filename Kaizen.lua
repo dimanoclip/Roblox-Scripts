@@ -70,6 +70,7 @@ game.Players[owner].Chatted:Connect(function(text)
         if enabled then enabled = false else enabled = true end
     elseif text == "take" then
         getquest()
+        task.wait(0.25)
         gettarget()
     elseif text == "done" then
         rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nquest(), "Bye")
@@ -77,6 +78,12 @@ game.Players[owner].Chatted:Connect(function(text)
         cancelquest:FireServer()
     elseif text == "party" then
         rs.Knit.Services.partyService.RE.Invite:FireServer(owner)
+    elseif text == "retake" then
+        rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nquest(), "Bye")
+        task.wait(0.1)
+        getquest()
+        task.wait(0.25)
+        gettarget()
     end
 end)
 lp.Chatted:Connect(function(text)
