@@ -10,7 +10,7 @@ local LP = game:GetService("Players").LocalPlayer
 local function getNil(name,class) for _,v in next, getnilinstances() do if v.ClassName==class and v.Name==name then return v;end end end
 
 task.spawn(function()
-    while true do task.wait(0.5)
+    while true do task.wait(1)
         scrollrem:FireServer("Talent", 5, getNil("Talent Scroll", "Tool"))
         scrollrem:FireServer("Physique", 5, getNil("Physique Scroll", "Tool"))
     end
