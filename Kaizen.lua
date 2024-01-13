@@ -59,7 +59,7 @@ local function gettarget()
     task.wait(0.1)
     rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), "Confirm")
 end
-local owner = "Frost_228333"
+local owner = "Frost_2283"
 game.Players:WaitForChild(owner).Chatted:Connect(function(text)
     if text == "cancel" then
         cancelquest:FireServer()
