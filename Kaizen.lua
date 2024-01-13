@@ -60,7 +60,7 @@ local function gettarget()
     rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), "Confirm")
 end
 local owner = "Frost_228333"
-game.Players:WaitForChild(owner).Chatted:Connect(function(text)
+game.Players:WaitForChild(owner).Chatted:Connect(function(text) 
     if text == "cancel" then
         cancelquest:FireServer()
     elseif text == "party" then
