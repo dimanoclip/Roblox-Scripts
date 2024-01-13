@@ -17,13 +17,11 @@ local function nearestquest()
     return ""
 end
 local function tptoquest(questname)
-    for _,k in pairs(game:GetService("Workspace").Interactions:children()) do
-        if k.Name == "Sidequests" or k.Name == "Story" then
-            for i,v in pairs(k:children()) do
-                for i1,Quest in pairs(v:children()) do
-                    if Quest.Name == questname and add.dist_to(Quest.Position) > 20 then
-                        lp.Character.PrimaryPart.CFrame = Quest.CFrame
-                    end
+    for _,k in pairs(game:GetService("Workspace").Interactions.Sidequests:children()) do
+        for i,v in pairs(k:children()) do
+            for i1,Quest in pairs(v:children()) do
+                if Quest.Name == questname and add.dist_to(Quest.Position) > 20 then
+                    lp.Character.PrimaryPart.CFrame = Quest.CFrame
                 end
             end
         end
