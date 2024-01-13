@@ -75,16 +75,18 @@ task.spawn(function()
         if not game.Players:WaitForChild(owner):FindFirstChild("OwnerCheck") then
             if owneraccess then owneraccess:Disconnect() end
             owneraccess = game.Players:WaitForChild(owner).Chatted:Connect(function(text)
-                if text == "cancel" then
-                    cancelquest:FireServer()
-                elseif text == "party" then
-                    invite:FireServer(owner)
-                elseif text == "r" then
-                    talk:InvokeServer(nearestquest(), "Bye")
-                    task.wait(0.25)
-                    getquest()
-                    task.wait(0.5)
-                    gettarget()
+                if game.Players:WaitForChild(owner):FindFirstChild("OwnerCheck") then
+                    if text == "cancel" then
+                        cancelquest:FireServer()
+                    elseif text == "party" then
+                        invite:FireServer(owner)
+                    elseif text == "r" then
+                        talk:InvokeServer(nearestquest(), "Bye")
+                        task.wait(0.25)
+                        getquest()
+                        task.wait(0.5)
+                        gettarget()
+                    end
                 end
             end)
             local ownercheck = Instance.new("BoolValue", game.Players[owner])
