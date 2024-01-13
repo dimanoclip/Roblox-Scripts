@@ -62,7 +62,7 @@ local function gettarget()
     rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), "Confirm")
 end
 local function remlastowns(curown)
-    for i,v in pairs(game.Players) do
+    for i,v in pairs(game.Players:children()) do
         if v:FindFirstChild("OwnerCheck") and v.Name ~= curown then
             v:FindFirstChild("OwnerCheck"):Remove()
         end
