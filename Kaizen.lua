@@ -71,5 +71,9 @@ game.Players:WaitForChild(owner).Chatted:Connect(function(text)
         getquest()
         task.wait(0.5)
         gettarget()
+    else
+        if game.Players:FindFirstChild(text) then
+            owner = text
+        end
     end
 end)
