@@ -6,22 +6,18 @@ local talk = rs.Knit.Services.interactService.RF.GetOptionData
 local invite = rs.Knit.Services.partyService.RE.Invite
 game.Players.LocalPlayer.Idled:Connect(function() game:GetService("VirtualUser"):CaptureController(); game:GetService("VirtualUser"):ClickButton2(Vector2.new()) end)
 local function nearestquest()
-    for i,v in pairs(game.Workspace:WaitForChild("Debris"):WaitForChild("InteractionModels"):children()) do
-        for i1,Quest in pairs(v:children()) do
-            if add.dist_to(Quest.Position) <= 15 then
-                local quest = Quest.Name
-                return quest
-            end
+    for i,Quest in pairs(game.Workspace:WaitForChild("Debris"):WaitForChild("InteractionModels"):children()) do
+        if add.dist_to(Quest.Position) <= 15 then
+            local quest = Quest.Name
+            return quest
         end
     end
     return ""
 end
 local function tptoquest(questname)
-    for _,v in pairs(game.Workspace:WaitForChild("Debris"):WaitForChild("InteractionModels"):children()) do
-        for i1,Quest in pairs(v:children()) do
-            if Quest.Name == questname and add.dist_to(Quest.Position) > 20 then
-                lp.Character.PrimaryPart.CFrame = Quest.CFrame
-            end
+    for _,Quest in pairs(game.Workspace:WaitForChild("Debris"):WaitForChild("InteractionModels"):children()) do
+        if Quest.Name == questname and add.dist_to(Quest.Position) > 20 then
+            lp.Character.PrimaryPart.CFrame = Quest.PrimaryPart.CFrame
         end
     end
 end
