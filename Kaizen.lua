@@ -73,7 +73,7 @@ local owneraccess
 task.spawn(function()
     while task.wait() do
         if not game.Players:WaitForChild(owner):FindFirstChild("OwnerCheck") then
-            owneraccess:Disconnect()
+            if owneraccess then owneraccess:Disconnect() end
             owneraccess = game.Players:WaitForChild(owner).Chatted:Connect(function(text)
                 if text == "cancel" then
                     cancelquest:FireServer()
