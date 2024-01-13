@@ -1,5 +1,6 @@
 local add = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/additional.lua"))()
 local lp = game.Players.LocalPlayer
+local Players = game:GetService("Players")
 local rs = game:GetService("ReplicatedStorage")
 local cancelquest = rs:WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("questService"):WaitForChild("RE"):WaitForChild("CancelCurrentQuest")
 game.Players.LocalPlayer.Idled:Connect(function() game:GetService("VirtualUser"):CaptureController(); game:GetService("VirtualUser"):ClickButton2(Vector2.new()) end)
@@ -62,7 +63,7 @@ local function gettarget()
     rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nquest(), "Confirm")
 end
 local owner = "dimasikprofi4"
-game.Players[owner].Chatted:Connect(function(text)
+game.Players:WaitForChild(owner).Chatted:Connect(function(text)
     if text == "here" then
         lp.Character.PrimaryPart.CFrame = game.Players["dimasikprofi4"].Character.PrimaryPart.CFrame
     elseif text == "take" then
