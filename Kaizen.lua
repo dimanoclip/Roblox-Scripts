@@ -1,7 +1,6 @@
 local add = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/additional.lua"))()
 local lp = game.Players.LocalPlayer
 local rs = game:GetService("ReplicatedStorage")
-local enabled = true
 local cancelquest = rs:WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("questService"):WaitForChild("RE"):WaitForChild("CancelCurrentQuest")
 game.Players.LocalPlayer.Idled:Connect(function() game:GetService("VirtualUser"):CaptureController(); game:GetService("VirtualUser"):ClickButton2(Vector2.new()) end)
 local function nquest()
@@ -66,11 +65,9 @@ local owner = "dimasikprofi4"
 game.Players[owner].Chatted:Connect(function(text)
     if text == "here" then
         lp.Character.PrimaryPart.CFrame = game.Players["dimasikprofi4"].Character.PrimaryPart.CFrame
-    elseif text == "toggle" then
-        if enabled then enabled = false else enabled = true end
     elseif text == "take" then
         getquest()
-        task.wait(0.25)
+        task.wait(0.5)
         gettarget()
     elseif text == "done" then
         rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nquest(), "Bye")
@@ -78,11 +75,11 @@ game.Players[owner].Chatted:Connect(function(text)
         cancelquest:FireServer()
     elseif text == "party" then
         rs.Knit.Services.partyService.RE.Invite:FireServer(owner)
-    elseif text == "retake" then
+    elseif text == "re" then
         rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nquest(), "Bye")
         task.wait(0.1)
         getquest()
-        task.wait(0.25)
+        task.wait(0.5)
         gettarget()
     end
 end)
