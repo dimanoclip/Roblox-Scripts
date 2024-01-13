@@ -4,6 +4,12 @@ local rs = game:GetService("ReplicatedStorage")
 local cancelquest = rs.Knit.Services.questService.RE.CancelCurrentQuest
 local talk = rs.Knit.Services.interactService.RF.GetOptionData
 local invite = rs.Knit.Services.partyService.RE.Invite
+local old
+old = hookmetamethod(game, "__namecall", function(self, ...)
+    if self.Name == "FallDamage" then return
+    elseif self.Name == "OnDash" then return end
+    return old(self, ...)
+end)
 game.Players.LocalPlayer.Idled:Connect(function() game:GetService("VirtualUser"):CaptureController(); game:GetService("VirtualUser"):ClickButton2(Vector2.new()) end)
 local function nearestquest()
     for i,Npc in pairs(game:GetService("Workspace").Debris.InteractionModels:children()) do
