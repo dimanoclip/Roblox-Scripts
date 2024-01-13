@@ -72,4 +72,5 @@ game.Players:WaitForChild(owner).Chatted:Connect(function(text)
         task.wait(0.5)
         gettarget()
     end
+    print(text)
 end)
