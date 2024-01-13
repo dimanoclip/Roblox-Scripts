@@ -7,7 +7,7 @@ local invite = rs.Knit.Services.partyService.RE.Invite
 game.Players.LocalPlayer.Idled:Connect(function() game:GetService("VirtualUser"):CaptureController(); game:GetService("VirtualUser"):ClickButton2(Vector2.new()) end)
 local function nearestquest()
     for i,Quest in pairs(game.Workspace:WaitForChild("Debris"):WaitForChild("InteractionModels"):children()) do
-        if add.dist_to(Quest.Position) <= 15 then
+        if add.dist_to(Quest.PrimaryPart.Position) <= 15 then
             local quest = Quest.Name
             return quest
         end
@@ -16,7 +16,7 @@ local function nearestquest()
 end
 local function tptoquest(questname)
     for _,Quest in pairs(game.Workspace:WaitForChild("Debris"):WaitForChild("InteractionModels"):children()) do
-        if Quest.Name == questname and add.dist_to(Quest.Position) > 20 then
+        if Quest.Name == questname and add.dist_to(Quest.PrimaryPart.Position) > 20 then
             lp.Character.PrimaryPart.CFrame = Quest.PrimaryPart.CFrame
         end
     end
@@ -40,62 +40,34 @@ local function getquest()
 end
 local function gettarget()
     local level = tonumber(string.split(lp.PlayerGui.UI.Tabs.MenuButton.Level.Text, "LV. ")[2])
-    if level >= 205 then rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), "Joko")
-    elseif level >= 195 then rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), "Poison Shrooms")
-    elseif level >= 175 then rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), "Cursed Sushis")
-    elseif level >= 160 then rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), "Gnashers")
-    elseif level >= 130 then rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), "Hanamato")
-    elseif level >= 125 then rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), "Rogue Sorcerers")
-    elseif level >= 110 then rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), "Fire Shrooms")
-    elseif level >= 80 then rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), "Fly Heads")
-    elseif level >= 70 then rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), "Saku")
-    elseif level >= 65 then rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), "Seniors")
-    elseif level >= 45 then rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), "Juniors")
-    elseif level >= 30 then rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), "Shrooms")
-    elseif level >= 15 then rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), "Armed Bandits")
-    elseif level >= 1 then rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), "Bandits") end
+    if level >= 205 then talk:InvokeServer(nearestquest(), "Joko")
+    elseif level >= 195 then talk:InvokeServer(nearestquest(), "Poison Shrooms")
+    elseif level >= 175 then talk:InvokeServer(nearestquest(), "Cursed Sushis")
+    elseif level >= 160 then talk:InvokeServer(nearestquest(), "Gnashers")
+    elseif level >= 130 then talk:InvokeServer(nearestquest(), "Hanamato")
+    elseif level >= 125 then talk:InvokeServer(nearestquest(), "Rogue Sorcerers")
+    elseif level >= 110 then talk:InvokeServer(nearestquest(), "Fire Shrooms")
+    elseif level >= 80 then talk:InvokeServer(nearestquest(), "Fly Heads")
+    elseif level >= 70 then talk:InvokeServer(nearestquest(), "Saku")
+    elseif level >= 65 then talk:InvokeServer(nearestquest(), "Seniors")
+    elseif level >= 45 then talk:InvokeServer(nearestquest(), "Juniors")
+    elseif level >= 30 then talk:InvokeServer(nearestquest(), "Shrooms")
+    elseif level >= 15 then talk:InvokeServer(nearestquest(), "Armed Bandits")
+    elseif level >= 1 then talk:InvokeServer(nearestquest(), "Bandits") end
     task.wait(0.1)
-    rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), "Confirm")
-end
-local function remlastowns(curown)
-    for i,v in pairs(game.Players:children()) do
-        if v:FindFirstChild("OwnerCheck") and v.Name ~= curown then
-            v:FindFirstChild("OwnerCheck"):Remove()
-        end
-    end
+    talk:InvokeServer(nearestquest(), "Confirm")
 end
 local owner = "dimasikprofi4"
-local owneraccess
-task.spawn(function()
-    while task.wait() do
-        if not game.Players:WaitForChild(owner):FindFirstChild("OwnerCheck") then
-            if owneraccess then owneraccess:Disconnect() end
-            owneraccess = game.Players:WaitForChild(owner).Chatted:Connect(function(text)
-                if game.Players:WaitForChild(owner):FindFirstChild("OwnerCheck") then
-                    if text == "cancel" then
-                        cancelquest:FireServer()
-                    elseif text == "party" then
-                        invite:FireServer(owner)
-                    elseif text == "r" then
-                        talk:InvokeServer(nearestquest(), "Bye")
-                        task.wait(0.25)
-                        getquest()
-                        task.wait(0.5)
-                        gettarget()
-                    end
-                end
-            end)
-            local ownercheck = Instance.new("BoolValue", game.Players[owner])
-            ownercheck.Name = "OwnerCheck"
-            ownercheck.Value = true
-            remlastowns(owner)
-        end
-    end
-end)
-
-game.Players.LocalPlayer.Chatted:Connect(function(text)
-    if game.Players:FindFirstChild(text) then
-        print("Owner changed to "..text)
-        owner = text
+game.Players:WaitForChild(owner).Chatted:Connect(function(text)
+    if text == "cancel" then
+        cancelquest:FireServer()
+    elseif text == "party" then
+        invite:FireServer(owner)
+    elseif text == "r" then
+        talk:InvokeServer(nearestquest(), "Bye")
+        task.wait(0.25)
+        getquest()
+        task.wait(0.5)
+        gettarget()
     end
 end)
