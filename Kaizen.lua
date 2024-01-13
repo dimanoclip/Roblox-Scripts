@@ -62,11 +62,6 @@ local function gettarget()
     task.wait(0.1)
     rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nquest(), "Confirm")
 end
-task.spawn(function()
-    while task.wait() do
-        getquest()
-    end
-end)
 local owner = "dimasikprofi4"
 game.Players[owner].Chatted:Connect(function(text)
     if text == "here" then
@@ -74,11 +69,14 @@ game.Players[owner].Chatted:Connect(function(text)
     elseif text == "toggle" then
         if enabled then enabled = false else enabled = true end
     elseif text == "take" then
+        getquest()
         gettarget()
     elseif text == "done" then
         rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nquest(), "Bye")
     elseif text == "cancel" then
         cancelquest:FireServer()
+    elseif text == "party" then
+        rs.Knit.Services.partyService.RE.Invite:FireServer(owner)
     end
 end)
 lp.Chatted:Connect(function(text)
