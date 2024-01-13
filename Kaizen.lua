@@ -16,7 +16,7 @@ local function nearestquest()
 end
 local function tptoquest(questname)
     for _,Npc in pairs(game:GetService("Workspace").Debris.InteractionModels:children()) do
-        if Npc.Name == questname and add.dist_to(Npc.PrimaryPart.Position) > 20 then
+        if Npc.PrimaryPart and Npc.Name == questname and add.dist_to(Npc.PrimaryPart.Position) > 20 then
             lp.Character.PrimaryPart.CFrame = Npc.PrimaryPart.CFrame
         end
     end
