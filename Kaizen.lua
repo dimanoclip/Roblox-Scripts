@@ -80,34 +80,3 @@ game.Players["dimasikprofi4"].Chatted:Connect(function(text)
         cancelquest:FireServer()
     end
 end)
-
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua", true))()
-
-
--- local lp = game.Players.LocalPlayer
--- local enabled, enemy, quest = true, nil, nil
--- local levelLabel = game.Players.LocalPlayer.PlayerGui:FindFirstChild("UI"):FindFirstChild("Tabs"):FindFirstChild("MenuButton"):FindFirstChild("Level")
--- local plylevel = tonumber(string.split(levelLabel.Text, "LV. ")[2])
--- local questFrameLabel = lp.PlayerGui:WaitForChild("UINoReset"):FindFirstChild("Quests"):FindFirstChild("QuestsFrame").QuestTemplate1.Label
-
--- game.Players.LocalPlayer.Idled:Connect(function() game:GetService("VirtualUser"):CaptureController(); game:GetService("VirtualUser"):ClickButton2(Vector2.new()) end)
-
--- local questTable = {
---     {"BanditSideQuest", "Bandits", 1},
---     {"BanditSideQuest", "Armed Bandits", 15},
---     {"ShroomSideQuest", "Shrooms", 30},
---     {"StudentSideQuest", "Juniors", 45},
---     {"StudentSideQuest", "Seniors", 65},
---     {"EnrolmentCurseQuest", "Fly Heads", 80},
---     {"EnrolmentCurseQuest", "Fire Shrooms", 110},
---     {"MidoriPrimarySideQuests", "Rogue Sorcerers", 125},
---     {"MidoriPrimarySideQuests", "Crabions", 140},
---     {"MidoriPrimarySideQuests", "Gnashers", 160},
---     {"SwampPrimarySideQuest", "Cursed Sushis", 175},
---     {"SwampPrimarySideQuest", "Poison Shrooms", 195},
---     {"SwampPrimarySideQuest", "Eye Fanatics", 220},
---     {"Miwa", "Saku", 70},
---     {"Yuzi2", "Hanamato", 130},
---     {"Pygmy", "Joko", 205}
--- }
