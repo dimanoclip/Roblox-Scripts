@@ -7,7 +7,7 @@ local invite = rs.Knit.Services.partyService.RE.Invite
 game.Players.LocalPlayer.Idled:Connect(function() game:GetService("VirtualUser"):CaptureController(); game:GetService("VirtualUser"):ClickButton2(Vector2.new()) end)
 local function nearestquest()
     for i,Quest in pairs(game.Workspace:WaitForChild("Debris"):WaitForChild("InteractionModels"):children()) do
-        if add.dist_to(Quest.PrimaryPart.Position) <= 15 then
+        if Quest:FindFirstChild("HumanoidRootPart") and add.dist_to(Quest.PrimaryPart.Position) <= 15 then
             local quest = Quest.Name
             return quest
         end
