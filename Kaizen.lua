@@ -63,6 +63,8 @@ game.Players:WaitForChild(owner).Chatted:Connect(function(text)
         cancelquest:FireServer()
     elseif text == "party" then
         invite:FireServer(owner)
+    elseif string.sub(text, 1 , 1) == "p" and game.Players:FindFirstChild(string.sub(text, 3)) then
+        invite:FireServer(string.sub(text, 3))
     elseif text == "r" then
         talk:InvokeServer(nearestquest(), "Bye")
         task.wait(0.25)
