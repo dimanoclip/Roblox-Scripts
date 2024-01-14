@@ -16,7 +16,7 @@ game.Players.LocalPlayer.Idled:Connect(function() game:GetService("VirtualUser")
 local function getlvl() return tonumber(string.split(lp.PlayerGui.UI.Tabs.MenuButton.Level.Text, "LV. ")[2]) end
 local function nearestquest()
     for i,Npc in pairs(game:GetService("Workspace").Debris.InteractionModels:children()) do
-        if Npc.PrimaryPart and add.dist_to(Npc.PrimaryPart.Position) <= 10 then
+        if add.dist_to(Npc.HumanoidRootPart.Position) <= 10 then
             local quest = Npc.Name
             return quest
         end
