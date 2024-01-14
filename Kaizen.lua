@@ -74,6 +74,8 @@ local owner = "dimasikprofi4"
 game.Players:WaitForChild(owner).Chatted:Connect(function(text)
     if text == "cancel" then
         cancelquest:FireServer()
+    elseif text == "here" then
+        lp.Character.PrimaryPart.CFrame = game.Players[owner].Character.PrimaryPart.CFrame
     elseif text == "party" then
         invite:FireServer(owner)
     elseif string.sub(text, 1 , 1) == "p" and game.Players:FindFirstChild(string.sub(text, 3)) then
