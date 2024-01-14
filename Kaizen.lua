@@ -2,33 +2,37 @@ local add = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanonam
 local lp = game.Players.LocalPlayer
 local rs = game:GetService("ReplicatedStorage")
 local cancelquest = rs.Knit.Services.questService.RE.CancelCurrentQuest
-local talk = rs.Knit.Services.interactService.RF.GetOptionData
 local invite = rs.Knit.Services.partyService.RE.Invite
 local old
 old = hookmetamethod(game, "__namecall", function(self, ...)
     if self.Name == "FallDamage" then return
+    elseif self.Name == "OnCooldown" then return
     elseif self.Name == "OnDash" then return end
     return old(self, ...)
 end)
 game.Players.LocalPlayer.Idled:Connect(function() game:GetService("VirtualUser"):CaptureController(); game:GetService("VirtualUser"):ClickButton2(Vector2.new()) end)
+local function getlvl() return tonumber(string.split(lp.PlayerGui.UI.Tabs.MenuButton.Level.Text, "LV. ")[2]) end
 local function nearestquest()
     for i,Npc in pairs(game:GetService("Workspace").Debris.InteractionModels:children()) do
-        if Npc.PrimaryPart and add.dist_to(Npc.PrimaryPart.Position) <= 15 then
+        if Npc.PrimaryPart and add.dist_to(Npc.PrimaryPart.Position) <= 10 then
             local quest = Npc.Name
             return quest
         end
     end
     return ""
 end
+local function selectdialog(option)
+    rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), option)
+end
 local function tptoquest(questname)
-    for _,Npc in pairs(game:GetService("Workspace").Debris.InteractionModels:children()) do
-        if Npc.PrimaryPart and Npc.Name == questname and add.dist_to(Npc.PrimaryPart.Position) > 20 then
-            lp.Character.PrimaryPart.CFrame = Npc.PrimaryPart.CFrame
-        end
+    local npc = game:GetService("Workspace").Debris.InteractionModels:FindFirstChild(questname)
+    local rp = npc:FindFirstChild("HumanoidRootPart")
+    if npc and rp and add.dist_to(rp.Position) > 10 then
+        lp.Character.PrimaryPart.CFrame = rp.CFrame
     end
 end
-local function getquest()
-    local level = tonumber(string.split(lp.PlayerGui.UI.Tabs.MenuButton.Level.Text, "LV. ")[2])
+local function checkquest()
+    local level = getlvl()
     if level >= 205 then tptoquest("Pygmy")
     elseif level >= 195 then tptoquest("SwampPrimarySideQuest")
     elseif level >= 175 then tptoquest("SwampPrimarySideQuest")
@@ -44,24 +48,24 @@ local function getquest()
     elseif level >= 15 then tptoquest("BanditSideQuest")
     elseif level >= 1 then tptoquest("BanditSideQuest") end
 end
-local function gettarget()
-    local level = tonumber(string.split(lp.PlayerGui.UI.Tabs.MenuButton.Level.Text, "LV. ")[2])
-    if level >= 205 then talk:InvokeServer(nearestquest(), "Joko")
-    elseif level >= 195 then talk:InvokeServer(nearestquest(), "Poison Shrooms")
-    elseif level >= 175 then talk:InvokeServer(nearestquest(), "Cursed Sushis")
-    elseif level >= 160 then talk:InvokeServer(nearestquest(), "Gnashers")
-    elseif level >= 130 then talk:InvokeServer(nearestquest(), "Hanamato")
-    elseif level >= 125 then talk:InvokeServer(nearestquest(), "Rogue Sorcerers")
-    elseif level >= 110 then talk:InvokeServer(nearestquest(), "Fire Shrooms")
-    elseif level >= 80 then talk:InvokeServer(nearestquest(), "Fly Heads")
-    elseif level >= 70 then talk:InvokeServer(nearestquest(), "Saku")
-    elseif level >= 65 then talk:InvokeServer(nearestquest(), "Seniors")
-    elseif level >= 45 then talk:InvokeServer(nearestquest(), "Juniors")
-    elseif level >= 30 then talk:InvokeServer(nearestquest(), "Shrooms")
-    elseif level >= 15 then talk:InvokeServer(nearestquest(), "Armed Bandits")
-    elseif level >= 1 then talk:InvokeServer(nearestquest(), "Bandits") end
+local function getquest()
+    local level = getlvl()
+    if level >= 205 then selectdialog("Joko")
+    elseif level >= 195 then selectdialog("Poison Shrooms")
+    elseif level >= 175 then selectdialog("Cursed Sushis")
+    elseif level >= 160 then selectdialog("Gnashers")
+    elseif level >= 130 then selectdialog("Hanamato")
+    elseif level >= 125 then selectdialog("Rogue Sorcerers")
+    elseif level >= 110 then selectdialog("Fire Shrooms")
+    elseif level >= 80 then selectdialog("Fly Heads")
+    elseif level >= 70 then selectdialog("Saku")
+    elseif level >= 65 then selectdialog("Seniors")
+    elseif level >= 45 then selectdialog("Juniors")
+    elseif level >= 30 then selectdialog("Shrooms")
+    elseif level >= 15 then selectdialog("Armed Bandits")
+    elseif level >= 1 then selectdialog("Bandits") end
     task.wait(0.1)
-    talk:InvokeServer(nearestquest(), "Confirm")
+    selectdialog("Confirm")
 end
 local owner = "dimasikprofi4"
 game.Players:WaitForChild(owner).Chatted:Connect(function(text)
@@ -72,10 +76,10 @@ game.Players:WaitForChild(owner).Chatted:Connect(function(text)
     elseif string.sub(text, 1 , 1) == "p" and game.Players:FindFirstChild(string.sub(text, 3)) then
         invite:FireServer(string.sub(text, 3))
     elseif text == "r" then
-        talk:InvokeServer(nearestquest(), "Bye")
+        selectdialog("Bye")
         task.wait(0.25)
-        getquest()
+        checkquest()
         task.wait(0.5)
-        gettarget()
+        getquest()
     end
 end)
