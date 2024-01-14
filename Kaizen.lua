@@ -85,3 +85,4 @@ game.Players:WaitForChild(owner).Chatted:Connect(function(text)
         getquest()
     end
 end)
+rs.Knit.Services.serverInputService.RE.TryEnableSafeMode:FireServer()
