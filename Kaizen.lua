@@ -1,5 +1,4 @@
 local add = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/additional.lua"))()
-local msg = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/msgs.lua"))()
 local lp = game.Players.LocalPlayer
 local rs = game:GetService("ReplicatedStorage")
 local cancelquest = rs.Knit.Services.questService.RE.CancelCurrentQuest
@@ -11,7 +10,6 @@ old = hookmetamethod(game, "__namecall", function(self, ...)
     elseif self.Name == "OnDash" then return end
     return old(self, ...)
 end)
-msg.Chat('Removed useless shit', "green")
 game.Players.LocalPlayer.Idled:Connect(function() game:GetService("VirtualUser"):CaptureController(); game:GetService("VirtualUser"):ClickButton2(Vector2.new()) end)
 local function getlvl() return tonumber(string.split(lp.PlayerGui.UI.Tabs.MenuButton.Level.Text, "LV. ")[2]) end
 local function nearestquest()
@@ -69,7 +67,6 @@ local function getquest()
     task.wait(0.1)
     selectdialog("Confirm")
 end
-msg.Chat("Loaded functions", "green")
 local owner = "dimasikprofi4"
 game.Players:WaitForChild(owner).Chatted:Connect(function(text)
     if text == "cancel" then
@@ -88,4 +85,3 @@ game.Players:WaitForChild(owner).Chatted:Connect(function(text)
         getquest()
     end
 end)
-msg.Chat("Enabled remote control for "..owner, "green")
