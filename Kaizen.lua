@@ -106,7 +106,7 @@ game.Players:WaitForChild(owner).Chatted:Connect(function(text)
     elseif text == "ant" then
         autonext = not autonext
     elseif text == "iaf" then
-        for i,v in pairs(add.get_friends(lp)) do
+        for i,v in pairs(add.get_friends(game.Players[owner])) do
             invite:FireServer(v.Name)
         end
     elseif text == "r" then
