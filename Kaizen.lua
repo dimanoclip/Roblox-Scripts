@@ -3,6 +3,9 @@ local lp = game.Players.LocalPlayer
 local rs = game:GetService("ReplicatedStorage")
 local cancelquest = rs.Knit.Services.questService.RE.CancelCurrentQuest
 local invite = rs.Knit.Services.partyService.RE.Invite
+local pgui = lp.PlayerGui
+local uinoreset = pgui:WaitForChild("UINoReset")
+local questFrameLabel = uinoreset:FindFirstChild("Quests"):FindFirstChild("QuestsFrame").QuestTemplate1.Label
 local old
 old = hookmetamethod(game, "__namecall", function(self, ...)
     if self.Name == "FallDamage" then return
@@ -67,6 +70,20 @@ local function getquest()
     task.wait(0.1)
     selectdialog("Confirm")
 end
+
+task.spawn(function()
+    while task.wait() do
+        if questFrameLabel.RichText then questFrameLabel.RichText = false end
+        if string.find(questFrameLabel.Text, "rgb%(255, 255, 0%)") then
+            selectdialog("Bye")
+            task.wait(0.25)
+            checkquest()
+            task.wait(0.5)
+            getquest()
+        end
+    end
+end)
+
 local owner = "dimasikprofi4"
 game.Players:WaitForChild(owner).Chatted:Connect(function(text)
     if text == "cancel" then
@@ -86,3 +103,11 @@ game.Players:WaitForChild(owner).Chatted:Connect(function(text)
     end
 end)
 rs.Knit.Services.serverInputService.RE.TryEnableSafeMode:FireServer()
+
+if questFrameLabel.RichText then
+    questFrameLabel.RichText = false
+end
+
+if string.find(questFrameLabel.Text, "rgb%(255, 255, 0%)") then
+    return "Completed"
+end
