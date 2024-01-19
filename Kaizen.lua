@@ -3,6 +3,9 @@ local lp = game.Players.LocalPlayer
 local rs = game:GetService("ReplicatedStorage")
 local cancelquest = rs.Knit.Services.questService.RE.CancelCurrentQuest
 local invite = rs.Knit.Services.partyService.RE.Invite
+local kick = rs.Knit.Services.partyService.RE.Kick
+local disband = rs.Knit.Services.partyService.RE.Disband
+
 local pgui = lp.PlayerGui
 local uinoreset = pgui:WaitForChild("UINoReset")
 local questFrameLabel = uinoreset:FindFirstChild("Quests"):FindFirstChild("QuestsFrame").QuestTemplate1.Label
@@ -34,8 +37,8 @@ local function tptoquest(questname)
         lp.Character.PrimaryPart.CFrame = rp.CFrame
     end
 end
-local function checkquest()
-    local level = getlvl()
+local function checkquest(lvl)
+    local level = lvl or getlvl()
     if level >= 205 then tptoquest("Pygmy")
     elseif level >= 195 then tptoquest("SwampPrimarySideQuest")
     elseif level >= 175 then tptoquest("SwampPrimarySideQuest")
@@ -51,8 +54,8 @@ local function checkquest()
     elseif level >= 15 then tptoquest("BanditSideQuest")
     elseif level >= 1 then tptoquest("BanditSideQuest") end
 end
-local function getquest()
-    local level = getlvl()
+local function getquest(lvl)
+    local level = lvl or getlvl()
     if level >= 205 then selectdialog("Joko")
     elseif level >= 195 then selectdialog("Poison Shrooms")
     elseif level >= 175 then selectdialog("Cursed Sushis")
@@ -94,12 +97,20 @@ game.Players:WaitForChild(owner).Chatted:Connect(function(text)
         invite:FireServer(owner)
     elseif string.sub(text, 1 , 1) == "p" and game.Players:FindFirstChild(string.sub(text, 3)) then
         invite:FireServer(string.sub(text, 3))
+    elseif string.sub(text, 1 , 1) == "k" and game.Players:FindFirstChild(string.sub(text, 3)) then
+        kick:FireServer(string.sub(text, 3))
+    elseif text == "db" then
+        disband:FireServer()
     elseif text == "r" then
         selectdialog("Bye")
         task.wait(0.25)
         checkquest()
         task.wait(0.5)
         getquest()
+    elseif add.int(text) then
+        checkquest(add.int(text))
+        task.wait(0.5)
+        getquest(add.int(text))
     end
 end)
 rs.Knit.Services.serverInputService.RE.TryEnableSafeMode:FireServer()
