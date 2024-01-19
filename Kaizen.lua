@@ -105,6 +105,10 @@ game.Players:WaitForChild(owner).Chatted:Connect(function(text)
         disband:FireServer()
     elseif text == "ant" then
         autonext = not autonext
+    elseif text == "iaf" then
+        for i,v in pairs(add.get_friends(lp)) do
+            invite:FireServer(v.Name)
+        end
     elseif text == "r" then
         selectdialog("Bye")
         task.wait(0.25)
