@@ -6,6 +6,7 @@ local invite = rs.Knit.Services.partyService.RE.Invite
 local kick = rs.Knit.Services.partyService.RE.Kick
 local disband = rs.Knit.Services.partyService.RE.Disband
 local autonext = false
+local curquestlvl
 local pgui = lp.PlayerGui
 local uinoreset = pgui:WaitForChild("UINoReset")
 local questFrameLabel = uinoreset:FindFirstChild("Quests"):FindFirstChild("QuestsFrame").QuestTemplate1.Label
@@ -84,6 +85,9 @@ task.spawn(function()
                 checkquest()
                 task.wait(0.5)
                 getquest()
+            else
+                task.wait(0.25)
+                getquest(curquestlvl)
             end
         end
     end
@@ -116,6 +120,7 @@ game.Players:WaitForChild(owner).Chatted:Connect(function(text)
         task.wait(0.5)
         getquest()
     elseif add.int(text) then
+        curquestlvl = add.int(text)
         checkquest(add.int(text))
         task.wait(0.5)
         getquest(add.int(text))
