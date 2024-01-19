@@ -5,7 +5,7 @@ local cancelquest = rs.Knit.Services.questService.RE.CancelCurrentQuest
 local invite = rs.Knit.Services.partyService.RE.Invite
 local kick = rs.Knit.Services.partyService.RE.Kick
 local disband = rs.Knit.Services.partyService.RE.Disband
-
+local autonext = false
 local pgui = lp.PlayerGui
 local uinoreset = pgui:WaitForChild("UINoReset")
 local questFrameLabel = uinoreset:FindFirstChild("Quests"):FindFirstChild("QuestsFrame").QuestTemplate1.Label
@@ -79,10 +79,12 @@ task.spawn(function()
         if questFrameLabel.RichText then questFrameLabel.RichText = false end
         if string.find(questFrameLabel.Text, "rgb%(255, 255, 0%)") then
             selectdialog("Bye")
-            task.wait(0.25)
-            checkquest()
-            task.wait(0.5)
-            getquest()
+            if autonext then
+                task.wait(0.25)
+                checkquest()
+                task.wait(0.5)
+                getquest()
+            end
         end
     end
 end)
@@ -95,12 +97,14 @@ game.Players:WaitForChild(owner).Chatted:Connect(function(text)
         lp.Character.PrimaryPart.CFrame = game.Players[owner].Character.PrimaryPart.CFrame
     elseif text == "party" then
         invite:FireServer(owner)
-    elseif string.sub(text, 1 , 1) == "p" and game.Players:FindFirstChild(string.sub(text, 3)) then
+    elseif string.sub(text,1,1) == "p" and game.Players:FindFirstChild(string.sub(text,3)) then
         invite:FireServer(string.sub(text, 3))
-    elseif string.sub(text, 1 , 1) == "k" and game.Players:FindFirstChild(string.sub(text, 3)) then
+    elseif string.sub(text,1,1) == "k" and game.Players:FindFirstChild(string.sub(text,3)) then
         kick:FireServer(string.sub(text, 3))
     elseif text == "db" then
         disband:FireServer()
+    elseif text == "ant" then
+        autonext = not autonext
     elseif text == "r" then
         selectdialog("Bye")
         task.wait(0.25)
@@ -114,11 +118,3 @@ game.Players:WaitForChild(owner).Chatted:Connect(function(text)
     end
 end)
 rs.Knit.Services.serverInputService.RE.TryEnableSafeMode:FireServer()
-
-if questFrameLabel.RichText then
-    questFrameLabel.RichText = false
-end
-
-if string.find(questFrameLabel.Text, "rgb%(255, 255, 0%)") then
-    return "Completed"
-end
