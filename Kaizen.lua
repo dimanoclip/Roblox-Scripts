@@ -121,9 +121,9 @@ game.Players:WaitForChild(owner).Chatted:Connect(function(text)
         getquest()
     elseif add.int(text) then
         curquestlvl = add.int(text)
-        checkquest(add.int(text))
+        checkquest(curquestlvl)
         task.wait(0.5)
-        getquest(add.int(text))
+        getquest(curquestlvl)
     end
 end)
 rs.Knit.Services.serverInputService.RE.TryEnableSafeMode:FireServer()
