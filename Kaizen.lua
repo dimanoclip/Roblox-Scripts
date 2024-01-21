@@ -28,9 +28,7 @@ local function nearestquest()
     end
     return ""
 end
-local function selectdialog(option)
-    rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), option)
-end
+local function selectdialog(option) rs.Knit.Services.interactService.RF.GetOptionData:InvokeServer(nearestquest(), option) end
 local function tptoquest(questname)
     local npc = game:GetService("Workspace").Debris.InteractionModels:FindFirstChild(questname)
     local rp = npc:FindFirstChild("HumanoidRootPart")
