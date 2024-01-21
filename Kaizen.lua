@@ -32,9 +32,7 @@ local function selectdialog(option) rs.Knit.Services.interactService.RF.GetOptio
 local function tptoquest(questname)
     local npc = game:GetService("Workspace").Debris.InteractionModels:FindFirstChild(questname)
     local rp = npc:FindFirstChild("HumanoidRootPart")
-    if npc and rp and add.dist_to(rp.Position) > 10 then
-        lp.Character.PrimaryPart.CFrame = rp.CFrame
-    end
+    if npc and rp and add.dist_to(rp.Position) > 10 then lp.Character.PrimaryPart.CFrame = rp.CFrame end
 end
 local function checkquest(lvl)
     local level = lvl or getlvl()
@@ -68,8 +66,7 @@ local function getquest(lvl)
     elseif level >= 45 then selectdialog("Juniors")
     elseif level >= 30 then selectdialog("Shrooms")
     elseif level >= 15 then selectdialog("Armed Bandits")
-    elseif level >= 1 then selectdialog("Bandits") end
-    task.wait(0.1)
+    elseif level >= 1 then selectdialog("Bandits") end task.wait(0.1)
     selectdialog("Confirm")
 end
 
@@ -78,13 +75,10 @@ task.spawn(function()
         if questFrameLabel.RichText then questFrameLabel.RichText = false end
         if string.find(questFrameLabel.Text, "rgb%(255, 255, 0%)") then
             selectdialog("Bye")
-            if autonext then
-                task.wait(0.25)
-                checkquest()
-                task.wait(0.5)
+            if autonext then task.wait(0.25)
+                checkquest(); task.wait(0.5)
                 getquest()
-            else
-                task.wait(0.25)
+            else task.wait(0.25)
                 getquest(curquestlvl)
             end
         end
@@ -98,6 +92,7 @@ game.Players:WaitForChild(owner).Chatted:Connect(function(text)
     elseif text == "here" then
         lp.Character.PrimaryPart.CFrame = game.Players[owner].Character.PrimaryPart.CFrame
     elseif text == "party" then
+        for i,v in pairs(add.get_friends(game.Players[owner])) do invite:FireServer(v.Name) end
         invite:FireServer(owner)
     elseif string.sub(text,1,1) == "p" and game.Players:FindFirstChild(string.sub(text,3)) then
         invite:FireServer(string.sub(text, 3))
@@ -107,10 +102,6 @@ game.Players:WaitForChild(owner).Chatted:Connect(function(text)
         disband:FireServer()
     elseif text == "ant" then
         autonext = not autonext
-    elseif text == "iaf" then
-        for i,v in pairs(add.get_friends(game.Players[owner])) do
-            invite:FireServer(v.Name)
-        end
     elseif text == "r" then
         selectdialog("Bye")
         task.wait(0.25)
