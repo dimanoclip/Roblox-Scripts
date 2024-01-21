@@ -18,7 +18,7 @@ old = hookmetamethod(game, "__namecall", function(self, ...)
     return old(self, ...)
 end)
 game.Players.LocalPlayer.Idled:Connect(function() game:GetService("VirtualUser"):CaptureController(); game:GetService("VirtualUser"):ClickButton2(Vector2.new()) end)
-local function getlvl() return tonumber(string.split(lp.PlayerGui.UI.Tabs.MenuButton.Level.Text, "LV. ")[2]) end
+local function getlvl() return add.int(string.split(lp.PlayerGui.UI.Tabs.MenuButton.Level.Text, "LV. ")[2]) end
 local function nearestquest()
     for i,Npc in pairs(game:GetService("Workspace").Debris.InteractionModels:children()) do
         if add.dist_to(Npc.HumanoidRootPart.Position) <= 10 then
