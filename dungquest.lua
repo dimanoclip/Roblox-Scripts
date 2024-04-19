@@ -13,12 +13,12 @@ local abils = pgui.abilities.Frame
 local skill1 = abils.LeftAbility
 local skill2 = abils.RightAbility
 local function getcd(skill)
-    return skill:FindFirstChild("cooldownNumber") and skill.cooldownNumber.Text
+    return (skill:FindFirstChild("slot") and skill:FindFirstChild("slot"):FindFirstChild("cooldownNumber")) and skill.slot.cooldownNumber.Text
 end
 local function delaymsg(target)
     local args = {
         [1] = "sorry, I have a cooldown!",
-        [2] = string.format("To %s", target.Nick or target)
+        [2] = string.format("To %s", target.Name or target)
     }
     chatevent:FireServer(unpack(args))
 end
