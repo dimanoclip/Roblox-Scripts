@@ -42,5 +42,5 @@ plys:FindFirstChild("dimasikprofi4").Chatted:Connect(function(msg, targ)
         if msg == cmd then callback(askedply) end
     end
 end)
-
+queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Scripts/main/dungquest.lua"))()')
 print("Everything loaded")
