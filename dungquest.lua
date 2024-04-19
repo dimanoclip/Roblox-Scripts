@@ -42,3 +42,5 @@ plys:FindFirstChild("dimasikprofi4").Chatted:Connect(function(msg, targ)
         if msg == cmd then callback(askedply) end
     end
 end)
+
+print("Everything loaded")
