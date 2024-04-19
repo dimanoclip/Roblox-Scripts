@@ -26,7 +26,7 @@ local cmds = {
     ["heal 1"] = function(target) if add.is_alive(target) and getcd(skill1) == "0.1" then root.CFrame = target.Character:WaitForChild("HumanoidRootPart").CFrame; key(Enum.KeyCode.Q) elseif getcd(skill1) ~= "0.1" then delaymsg(target) end end,
     ["heal 2"] = function(target) if add.is_alive(target) and getcd(skill2) == "0.1" then root.CFrame = target.Character:WaitForChild("HumanoidRootPart").CFrame; key(Enum.KeyCode.E) elseif getcd(skill2) ~= "0.1" then delaymsg(target) end end
 }
-plys["makasgamer20"].Chatted:Connect(function(msg, targ)
+plys:FindFirstChild("makasgamer20").Chatted:Connect(function(msg, targ)
     local askedply = plys["makasgamer20"]
     if string.find(msg, "/w ighf8yu5g ") then msg = string.sub(msg, #"/w ighf8yu5g "+2) end
     print(msg)
@@ -34,7 +34,7 @@ plys["makasgamer20"].Chatted:Connect(function(msg, targ)
         if msg == cmd then callback(askedply) end
     end
 end)
-plys["dimasikprofi4"].Chatted:Connect(function(msg, targ)
+plys:FindFirstChild("dimasikprofi4").Chatted:Connect(function(msg, targ)
     local askedply = plys["dimasikprofi4"]
     if string.find(msg, "/w ighf8yu5g ") then msg = string.sub(msg, #"/w ighf8yu5g "+2) end
     print(msg)
