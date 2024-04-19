@@ -14,8 +14,8 @@ local skill1 = abils.LeftAbility
 local skill2 = abils.RightAbility
 local lastpos = char:FindFirstChild("HumanoidRootPart").CFrame
 local cmds = {
-    ["heal 1"] = function(target) if add.is_alive(target) then spawn(function() char:FindFirstChild("HumanoidRootPart").CFrame = target.Character:WaitForChild("HumanoidRootPart").CFrame; key(Enum.KeyCode.Q); task.wait(15); char:FindFirstChild("HumanoidRootPart").CFrame = lastpos end) end end,
-    ["heal 2"] = function(target) if add.is_alive(target) then spawn(function() char:FindFirstChild("HumanoidRootPart").CFrame = target.Character:WaitForChild("HumanoidRootPart").CFrame; key(Enum.KeyCode.E); task.wait(15); char:FindFirstChild("HumanoidRootPart").CFrame = lastpos end) end end
+    ["heal 1"] = function(target) if add.is_alive(target) then spawn(function() char:FindFirstChild("HumanoidRootPart").CFrame = target.Character:WaitForChild("HumanoidRootPart").CFrame; key(Enum.KeyCode.Q); task.wait(10); char:FindFirstChild("HumanoidRootPart").CFrame = lastpos end) end end,
+    ["heal 2"] = function(target) if add.is_alive(target) then spawn(function() char:FindFirstChild("HumanoidRootPart").CFrame = target.Character:WaitForChild("HumanoidRootPart").CFrame; key(Enum.KeyCode.E); task.wait(10); char:FindFirstChild("HumanoidRootPart").CFrame = lastpos end) end end
 }
 spawn(function()
     plys:WaitForChild("makasgamer20").Chatted:Connect(function(msg, targ)
