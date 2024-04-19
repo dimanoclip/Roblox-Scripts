@@ -17,14 +17,14 @@ local function getcd(skill)
 end
 local function delaymsg(target)
     local args = {
-        [1] = "sorry, I have a cooldown!",
+        [1] = "COOLDOWN!",
         [2] = string.format("To %s", target.Name or target)
     }
-    chatevent:FireServer(unpack(args))
+    for i=1,5 do task.wait(); chatevent:FireServer(unpack(args)) end
 end
 local cmds = {
-    ["heal 1"] = function(target) if add.is_alive(target) and getcd(skill1) == "0.1" then root.CFrame = target.Character:WaitForChild("HumanoidRootPart").CFrame; key(Enum.KeyCode.Q) elseif getcd(skill1) ~= "0.1" then delaymsg(target) end end,
-    ["heal 2"] = function(target) if add.is_alive(target) and getcd(skill2) == "0.1" then root.CFrame = target.Character:WaitForChild("HumanoidRootPart").CFrame; key(Enum.KeyCode.E) elseif getcd(skill2) ~= "0.1" then delaymsg(target) end end
+    ["heal 1"] = function(target) if add.is_alive(target) and (getcd(skill1) == "0.1" or getcd(skill1) == "4") then root.CFrame = target.Character:WaitForChild("HumanoidRootPart").CFrame; key(Enum.KeyCode.Q) elseif getcd(skill1) ~= "0.1" and getcd(skill1) ~= "4" then delaymsg(target) end end,
+    ["heal 2"] = function(target) if add.is_alive(target) and (getcd(skill2) == "0.1" or getcd(skill2) == "4") then root.CFrame = target.Character:WaitForChild("HumanoidRootPart").CFrame; key(Enum.KeyCode.E) elseif getcd(skill2) ~= "0.1" and getcd(skill2) ~= "4" then delaymsg(target) end end
 }
 plys:FindFirstChild("makasgamer20").Chatted:Connect(function(msg, targ)
     local askedply = plys["makasgamer20"]
