@@ -35,7 +35,7 @@ spawn(function()
         local hum = target.Character:WaitForChild("Humanoid")
         if health <= hum.MaxHealth/2 then
             cmds["heal 2"](target)
-        elseif health <= hum.MaxHealth/1.3 then
+        elseif health <= (hum.MaxHealth-(hum.MaxHealth/10)) then
             cmds["heal 1"](target)
         end
     end)
@@ -55,7 +55,7 @@ spawn(function()
         local hum = target.Character:WaitForChild("Humanoid")
         if health <= hum.MaxHealth/2 then
             cmds["heal 2"](target)
-        elseif health <= hum.MaxHealth/1.3 then
+        elseif health <= (hum.MaxHealth-(hum.MaxHealth/10)) then
             cmds["heal 1"](target)
         end
     end)
