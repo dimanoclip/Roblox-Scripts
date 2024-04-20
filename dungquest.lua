@@ -17,8 +17,8 @@ local function chat_say(text, target)
     chatevent:FireServer(text, "To "..(target.Name or target))
 end
 local cmds = {
-    ["heal 1"] = function(target) if add.is_alive(target) then spawn(function() char:FindFirstChild("HumanoidRootPart").CFrame = target.Character:WaitForChild("HumanoidRootPart").CFrame; task.wait(); key(Enum.KeyCode.Q); task.wait(11.5); char:FindFirstChild("HumanoidRootPart").CFrame = lastpos; chat_say("I'm ready!", target) end) end end,
-    ["heal 2"] = function(target) if add.is_alive(target) then spawn(function() char:FindFirstChild("HumanoidRootPart").CFrame = target.Character:WaitForChild("HumanoidRootPart").CFrame; task.wait(); key(Enum.KeyCode.E); task.wait(11.5); char:FindFirstChild("HumanoidRootPart").CFrame = lastpos; chat_say("I'm ready!", target) end) end end
+    ["heal 1"] = function(target) if add.is_alive(target) then spawn(function() char:FindFirstChild("HumanoidRootPart").CFrame = target.Character:WaitForChild("HumanoidRootPart").CFrame; task.wait(); key(Enum.KeyCode.Q); task.wait(8); char:FindFirstChild("HumanoidRootPart").CFrame = lastpos; chat_say("I'm ready!", target) end) end end,
+    ["heal 2"] = function(target) if add.is_alive(target) then spawn(function() char:FindFirstChild("HumanoidRootPart").CFrame = target.Character:WaitForChild("HumanoidRootPart").CFrame; task.wait(); key(Enum.KeyCode.E); task.wait(8); char:FindFirstChild("HumanoidRootPart").CFrame = lastpos; chat_say("I'm ready!", target) end) end end
 }
 spawn(function()
     local player = plys:WaitForChild("makasgamer20")
