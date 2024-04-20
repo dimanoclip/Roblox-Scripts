@@ -9,9 +9,9 @@ local rs = game:GetService("ReplicatedStorage")
 local chatevent = rs:WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest")
 local spawn = task.spawn
 local pgui = lp.PlayerGui
-local abils = pgui.abilities.Frame
-local skill1 = abils.LeftAbility
-local skill2 = abils.RightAbility
+local abils = pgui:WaitForChild("abilities").Frame
+local skill1 = abils:FindFirstChild("LeftAbility")
+local skill2 = abils:FindFirstChild("RightAbility")
 local lastpos = char:FindFirstChild("HumanoidRootPart").CFrame
 local function chat_say(text, target)
     chatevent:FireServer(text, "To "..(target.Name or target))
@@ -29,6 +29,15 @@ spawn(function()
             if msg == cmd then callback(askedply) end
         end
     end)
+    plys:WaitForChild("makasgamer20").HealthChanged:Connect(function(health)
+        local target = plys["makasgamer20"]
+        local hum = target.Character:WaitForChild("Humanoid")
+        if health <= hum.MaxHealth/2 then
+            cmds["heal 2"](target)
+        elseif health <= hum.MaxHealth/1.3 then
+            cmds["heal 1"](target)
+        end
+    end)
 end)
 spawn(function()
     plys:WaitForChild("dimasikprofi4").Chatted:Connect(function(msg, targ)
@@ -37,6 +46,15 @@ spawn(function()
         print(msg)
         for cmd, callback in pairs(cmds) do
             if msg == cmd then callback(askedply) end
+        end
+    end)
+    plys:WaitForChild("dimasikprofi4").HealthChanged:Connect(function(health)
+        local target = plys["dimasikprofi4"]
+        local hum = target.Character:WaitForChild("Humanoid")
+        if health <= hum.MaxHealth/2 then
+            cmds["heal 2"](target)
+        elseif health <= hum.MaxHealth/1.3 then
+            cmds["heal 1"](target)
         end
     end)
 end)
