@@ -20,6 +20,15 @@ local cmds = {
     ["heal 1"] = function(target) if add.is_alive(target) then spawn(function() key(Enum.KeyCode.Q); chat_say("Healed!!!", target) end) end end,
     ["heal 2"] = function(target) if add.is_alive(target) then spawn(function() key(Enum.KeyCode.E); chat_say("Healed!!!", target) end) end end
 }
+
+char:WaitForChild("Humanoid").HealthChanged:Connect(function(health)
+    local target = lp
+    local hum = target.Character:WaitForChild("Humanoid")
+    if health <= hum.MaxHealth/1.4 then
+        cmds["heal 2"](target)
+    end
+end)
+
 spawn(function()
     local player = plys:WaitForChild("makasgamer20")
     player.Chatted:Connect(function(msg, targ)
