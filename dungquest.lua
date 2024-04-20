@@ -21,15 +21,16 @@ local cmds = {
     ["heal 2"] = function(target) if add.is_alive(target) then spawn(function() char:FindFirstChild("HumanoidRootPart").CFrame = target.Character:WaitForChild("HumanoidRootPart").CFrame; task.wait(); key(Enum.KeyCode.E); task.wait(11.5); char:FindFirstChild("HumanoidRootPart").CFrame = lastpos; chat_say("I'm ready!", target) end) end end
 }
 spawn(function()
-    plys:WaitForChild("makasgamer20").Chatted:Connect(function(msg, targ)
-        local askedply = plys["makasgamer20"]
+    local player = plys:WaitForChild("makasgamer20")
+    player.Chatted:Connect(function(msg, targ)
+        local askedply = player
         if string.find(msg, "/w ighf8yu5g ") then msg = string.sub(msg, #"/w ighf8yu5g "+2) end
         print(msg)
         for cmd, callback in pairs(cmds) do
             if msg == cmd then callback(askedply) end
         end
     end)
-    plys:WaitForChild("makasgamer20").Character:WaitForChild("Humanoid").HealthChanged:Connect(function(health)
+    player.Character:WaitForChild("Humanoid").HealthChanged:Connect(function(health)
         local target = plys["makasgamer20"]
         local hum = target.Character:WaitForChild("Humanoid")
         if health <= hum.MaxHealth/2 then
@@ -40,15 +41,16 @@ spawn(function()
     end)
 end)
 spawn(function()
-    plys:WaitForChild("dimasikprofi4").Chatted:Connect(function(msg, targ)
-        local askedply = plys["dimasikprofi4"]
+    local player = plys:WaitForChild("dimasikprofi4")
+    player.Chatted:Connect(function(msg, targ)
+        local askedply = player
         if string.find(msg, "/w ighf8yu5g ") then msg = string.sub(msg, #"/w ighf8yu5g "+2) end
         print(msg)
         for cmd, callback in pairs(cmds) do
             if msg == cmd then callback(askedply) end
         end
     end)
-    plys:WaitForChild("dimasikprofi4").Character:WaitForChild("Humanoid").HealthChanged:Connect(function(health)
+    player.Character:WaitForChild("Humanoid").HealthChanged:Connect(function(health)
         local target = plys["dimasikprofi4"]
         local hum = target.Character:WaitForChild("Humanoid")
         if health <= hum.MaxHealth/2 then
@@ -59,4 +61,4 @@ spawn(function()
     end)
 end)
 queue_on_teleport('loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Dimanoname/Roblox-Scripts/main/dungquest.lua"))()')
-print(("Everything loaded\n").rep(5))
+print(string.rep("Everything loaded\n", 5))
