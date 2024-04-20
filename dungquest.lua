@@ -29,7 +29,7 @@ spawn(function()
             if msg == cmd then callback(askedply) end
         end
     end)
-    plys:WaitForChild("makasgamer20").HealthChanged:Connect(function(health)
+    plys:WaitForChild("makasgamer20").Character:WaitForChild("Humanoid").HealthChanged:Connect(function(health)
         local target = plys["makasgamer20"]
         local hum = target.Character:WaitForChild("Humanoid")
         if health <= hum.MaxHealth/2 then
@@ -48,7 +48,7 @@ spawn(function()
             if msg == cmd then callback(askedply) end
         end
     end)
-    plys:WaitForChild("dimasikprofi4").HealthChanged:Connect(function(health)
+    plys:WaitForChild("dimasikprofi4").Character:WaitForChild("Humanoid").HealthChanged:Connect(function(health)
         local target = plys["dimasikprofi4"]
         local hum = target.Character:WaitForChild("Humanoid")
         if health <= hum.MaxHealth/2 then
