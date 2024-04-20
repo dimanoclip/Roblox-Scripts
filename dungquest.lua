@@ -14,7 +14,7 @@ local skill1 = abils:FindFirstChild("LeftAbility")
 local skill2 = abils:FindFirstChild("RightAbility")
 local lastpos = char:WaitForChild("HumanoidRootPart").CFrame
 local function chat_say(text, target)
-    chatevent:FireServer(text, "To "..(target.Name or target))
+    chatevent:FireServer(string.format("/w %s %s", target.Name, text), "All")
 end
 local cmds = {
     ["heal 1"] = function(target) if add.is_alive(target) then spawn(function() key(Enum.KeyCode.Q); chat_say("Healed!!!", target) end) end end,
