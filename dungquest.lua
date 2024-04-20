@@ -12,7 +12,7 @@ local pgui = lp.PlayerGui
 local abils = pgui:WaitForChild("abilities").Frame
 local skill1 = abils:FindFirstChild("LeftAbility")
 local skill2 = abils:FindFirstChild("RightAbility")
-local lastpos = char:FindFirstChild("HumanoidRootPart").CFrame
+local lastpos = char:WaitForChild("HumanoidRootPart").CFrame
 local function chat_say(text, target)
     chatevent:FireServer(text, "To "..(target.Name or target))
 end
