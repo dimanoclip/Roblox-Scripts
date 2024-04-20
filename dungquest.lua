@@ -17,8 +17,8 @@ local function chat_say(text, target)
     chatevent:FireServer(text, "To "..(target.Name or target))
 end
 local cmds = {
-    ["heal 1"] = function(target) if add.is_alive(target) then spawn(function() char:FindFirstChild("HumanoidRootPart").CFrame = target.Character:WaitForChild("HumanoidRootPart").CFrame; task.wait(); key(Enum.KeyCode.Q); task.wait(8); char:FindFirstChild("HumanoidRootPart").CFrame = lastpos; chat_say("I'm ready!", target) end) end end,
-    ["heal 2"] = function(target) if add.is_alive(target) then spawn(function() char:FindFirstChild("HumanoidRootPart").CFrame = target.Character:WaitForChild("HumanoidRootPart").CFrame; task.wait(); key(Enum.KeyCode.E); task.wait(8); char:FindFirstChild("HumanoidRootPart").CFrame = lastpos; chat_say("I'm ready!", target) end) end end
+    ["heal 1"] = function(target) if add.is_alive(target) then spawn(function() key(Enum.KeyCode.Q); chat_say("Healed!!!", target) end) end end,
+    ["heal 2"] = function(target) if add.is_alive(target) then spawn(function() key(Enum.KeyCode.E); chat_say("Healed!!!", target) end) end end
 }
 spawn(function()
     local player = plys:WaitForChild("makasgamer20")
@@ -35,7 +35,7 @@ spawn(function()
         local hum = target.Character:WaitForChild("Humanoid")
         if health <= hum.MaxHealth/2 then
             cmds["heal 2"](target)
-        elseif health <= (hum.MaxHealth-(hum.MaxHealth/10)) then
+        elseif health <= hum.MaxHealth/1.3 then
             cmds["heal 1"](target)
         end
     end)
@@ -55,7 +55,7 @@ spawn(function()
         local hum = target.Character:WaitForChild("Humanoid")
         if health <= hum.MaxHealth/2 then
             cmds["heal 2"](target)
-        elseif health <= (hum.MaxHealth-(hum.MaxHealth/10)) then
+        elseif health <= hum.MaxHealth/1.3 then
             cmds["heal 1"](target)
         end
     end)
