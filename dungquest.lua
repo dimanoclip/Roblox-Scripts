@@ -7,7 +7,7 @@ local char = lp.Character or lp.CharacterAdded:Wait()
 lp.CharacterAdded:Connect(function(character) char = character end)
 local rs = game:GetService("ReplicatedStorage")
 local chatevent = rs:WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest")
-local spawn = task.spawn
+local spawn, wait = task.spawn, task.wait
 local pgui = lp.PlayerGui
 local abils = pgui:WaitForChild("abilities").Frame
 local skill1 = abils:FindFirstChild("LeftAbility")
@@ -15,6 +15,16 @@ local skill2 = abils:FindFirstChild("RightAbility")
 local lastpos = char:WaitForChild("HumanoidRootPart").CFrame
 local function chat_say(text, target)
     chatevent:FireServer(string.format("/w %s %s", target.Name, text), "All")
+end
+local debounce = false
+local function deb(time)
+    spawn(function()
+        if not debounce then
+            debounce = true
+            wait(time)
+            debounce = false
+        end
+    end)
 end
 local triggers = {
     others = {2, 1.3},
@@ -33,8 +43,8 @@ local function checktriggers(ply, health)
     end
 end
 local cmds = {
-    ["heal 1"] = function(target) if add.is_alive(target) then spawn(function() key(Enum.KeyCode.Q); chat_say("Healed!!!", target) end) end end,
-    ["heal 2"] = function(target) if add.is_alive(target) then spawn(function() key(Enum.KeyCode.E); chat_say("Healed!!!", target) end) end end,
+    ["heal 1"] = function(target) if add.is_alive(target) and not debounce then spawn(function() key(Enum.KeyCode.Q); chat_say("Healed!!!", target); deb(0.3) end) end end,
+    ["heal 2"] = function(target) if add.is_alive(target) and not debounce then spawn(function() key(Enum.KeyCode.E); chat_say("Healed!!!", target); deb(0.3) end) end end,
 }
 
 char:WaitForChild("Humanoid").HealthChanged:Connect(function(health)
