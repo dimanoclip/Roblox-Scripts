@@ -1,14 +1,6 @@
-local VirtualInputManager = game:GetService("VirtualInputManager")
-local PressKey = function(kc, wtime)
-    VirtualInputManager:SendKeyEvent(true, kc, false, nil)
-    if wtime then task.wait(wtime) end
-    VirtualInputManager:SendKeyEvent(false, kc, false, nil)
-end
-local is_alive = function(ply)
-    if ply.Character:FindFirstChild("Humanoid") and ply.Character:FindFirstChild("Humanoid").Health > 0 then return true end
-    return false
-end
-local key = PressKey
+local inp = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/vinp.lua"))()
+local add = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/additional.lua"))()
+local key = inp.PressKey
 local plys = game.Players
 local lp = plys.LocalPlayer
 local char = lp.Character or lp.CharacterAdded:Wait()
@@ -25,8 +17,8 @@ local function chat_say(text, target)
     chatevent:FireServer(string.format("/w %s %s", target.Name, text), "All")
 end
 local cmds = {
-    ["heal 1"] = function(target) if is_alive(target) then spawn(function() key(Enum.KeyCode.Q); chat_say("Healed!!!", target) end) end end,
-    ["heal 2"] = function(target) if is_alive(target) then spawn(function() key(Enum.KeyCode.E); chat_say("Healed!!!", target) end) end end
+    ["heal 1"] = function(target) if add.is_alive(target) then spawn(function() key(Enum.KeyCode.Q); chat_say("Healed!!!", target) end) end end,
+    ["heal 2"] = function(target) if add.is_alive(target) then spawn(function() key(Enum.KeyCode.E); chat_say("Healed!!!", target) end) end end
 }
 
 char:WaitForChild("Humanoid").HealthChanged:Connect(function(health)
@@ -79,3 +71,4 @@ spawn(function()
 end)
 queue_on_teleport('loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Dimanoname/Roblox-Scripts/main/dungquest.lua"))()')
 print(string.rep("\nEverything loaded", 5))
+loadstring(game:HttpGet('https://raw.githubusercontent.com/1201for/V.G-Hub/main/Dungeon%20Quest'))()
