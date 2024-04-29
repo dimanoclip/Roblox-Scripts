@@ -16,6 +16,22 @@ local lastpos = char:WaitForChild("HumanoidRootPart").CFrame
 local function chat_say(text, target)
     chatevent:FireServer(string.format("/w %s %s", target.Name, text), "All")
 end
+local triggers = {
+    others = {2, 1.3},
+    self = {1.1}
+}
+local function checktriggers(ply, health)
+    local hum = ply.Character:WaitForChild("Humanoid"); health = health or hum.Health
+    if ply == lp then
+        for i, trigger in pairs(triggers["self"]) do
+            if health <= hum.MaxHealth/trigger then return i end
+        end
+    else
+        for i, trigger in pairs(triggers["others"]) do
+            if health <= hum.MaxHealth/trigger then return i end
+        end
+    end
+end
 local cmds = {
     ["heal 1"] = function(target) if add.is_alive(target) then spawn(function() key(Enum.KeyCode.Q); chat_say("Healed!!!", target) end) end end,
     ["heal 2"] = function(target) if add.is_alive(target) then spawn(function() key(Enum.KeyCode.E); chat_say("Healed!!!", target) end) end end,
@@ -24,7 +40,7 @@ local cmds = {
 char:WaitForChild("Humanoid").HealthChanged:Connect(function(health)
     local target = lp
     local hum = target.Character:WaitForChild("Humanoid")
-    if health <= hum.MaxHealth/1.1 then
+    if checktriggers(target, health) then
         cmds["heal 2"](target)
     end
 end)
@@ -40,11 +56,10 @@ spawn(function()
         end
     end)
     player.Character:WaitForChild("Humanoid").HealthChanged:Connect(function(health)
-        local target = plys["makasgamer20"]
-        local hum = target.Character:WaitForChild("Humanoid")
-        if health <= hum.MaxHealth/2 then
+        local target = player
+        if checktriggers(target, health) == 1 then
             cmds["heal 2"](target)
-        elseif health <= hum.MaxHealth/1.3 then
+        elseif checktriggers(target, health) == 2 then
             cmds["heal 1"](target)
         end
     end)
@@ -60,14 +75,14 @@ spawn(function()
         end
     end)
     player.Character:WaitForChild("Humanoid").HealthChanged:Connect(function(health)
-        local target = plys["dimasikprofi4"]
-        local hum = target.Character:WaitForChild("Humanoid")
-        if health <= hum.MaxHealth/2 then
+        local target = player
+        if checktriggers(target, health) == 1 then
             cmds["heal 2"](target)
-        elseif health <= hum.MaxHealth/1.3 then
+        elseif checktriggers(target, health) == 2 then
             cmds["heal 1"](target)
         end
     end)
 end)
 queue_on_teleport('loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Dimanoname/Roblox-Scripts/main/dungquest.lua"))()')
 print(string.rep("\nEverything loaded", 5))
+print(string.format("\nTriggers are: %s for others,\n %s for self\n", table.concat(triggers["others"], ", "), table.concat(triggers["self"], ", ")))
