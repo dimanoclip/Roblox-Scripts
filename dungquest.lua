@@ -18,13 +18,13 @@ local function chat_say(text, target)
 end
 local cmds = {
     ["heal 1"] = function(target) if add.is_alive(target) then spawn(function() key(Enum.KeyCode.Q); chat_say("Healed!!!", target) end) end end,
-    ["heal 2"] = function(target) if add.is_alive(target) then spawn(function() key(Enum.KeyCode.E); chat_say("Healed!!!", target) end) end end
+    ["heal 2"] = function(target) if add.is_alive(target) then spawn(function() key(Enum.KeyCode.E); chat_say("Healed!!!", target) end) end end,
 }
 
 char:WaitForChild("Humanoid").HealthChanged:Connect(function(health)
     local target = lp
     local hum = target.Character:WaitForChild("Humanoid")
-    if health <= hum.MaxHealth/1.4 then
+    if health <= hum.MaxHealth/1.1 then
         cmds["heal 2"](target)
     end
 end)
