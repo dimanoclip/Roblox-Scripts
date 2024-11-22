@@ -93,8 +93,8 @@ function checkingrep(player)
             if not seekforvillains then task.wait() return end
             if player.PrivateStats.Reputation.Value ~= lastrep and player.PrivateStats.Reputation.Value < 0 then
                 if not player.Character then return end
-                if add.dist_to(player.Character.HumanoidRootPart.Position) < 5000 then task.wait(1); soulattack(player)
-                else while true do if add.dist_to(player.Character.HumanoidRootPart.Position) < 5000 then task.wait(1); soulattack(player); break end task.wait(0.5) end end
+                if add.dist_to(player.Character.HumanoidRootPart.Position) < 700 then task.wait(1); soulattack(player)
+                else while true do if add.dist_to(player.Character.HumanoidRootPart.Position) < 700 then task.wait(1); soulattack(player); break end task.wait(0.5) end end
             end
         end
     end)
