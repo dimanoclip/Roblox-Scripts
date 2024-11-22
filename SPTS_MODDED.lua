@@ -7,7 +7,7 @@ game:GetService('Players').LocalPlayer.Idled:Connect(function() game:GetService(
 local msgs = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/msgs.lua"))()
 local add = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/additional.lua"))()
 local seekforvillains = false
-_G.levels = {19, 26, 21, 22, 18}
+_G.levels = {20, 26, 22, 22, 18}
 local players = game.Players
 local player = players.LocalPlayer
 local char = player.Character or player.CharacterAdded:Wait() and player.Character
@@ -120,16 +120,16 @@ msgs.Notify('Main Binds', 'F1 - toggle watching\nF2 - Kill villians(PP)\nF3 - ki
 msgs.Notify('Misc Binds', 'F4 - ReJoin\nF5 - ServerHop', 5)
 
 
-task.spawn(function() while task.wait() do remote:FireServer({"FinishMission",300000}) task.wait(0.000000000001) end end)
+-- task.spawn(function() while task.wait() do remote:FireServer({"FinishMission",300000}) task.wait(0.000000000001) end end)
 
-local convs = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/convs.lua"))()
-local weaker = 0
-local myps = game.Players.LocalPlayer.PrivateStats.PsychicPower.Value
-for i,v in pairs(game.Players:GetChildren()) do
-    if myps > v.PrivateStats.PsychicPower.Value then weaker = weaker + 1 end
-    print(v.Name..'('..v.PrivateStats.Reputation.Value..')', 'PP: '..convs.ToLetters(v.PrivateStats.PsychicPower.Value))
-end
-print(weaker..'/'..(#game.Players:GetChildren())-1)
+-- local convs = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/convs.lua"))()
+-- local weaker = 0
+-- local myps = game.Players.LocalPlayer.PrivateStats.PsychicPower.Value
+-- for i,v in pairs(game.Players:GetChildren()) do
+--     if myps > v.PrivateStats.PsychicPower.Value then weaker = weaker + 1 end
+--     print(v.Name..'('..v.PrivateStats.Reputation.Value..')', 'PP: '..convs.ToLetters(v.PrivateStats.PsychicPower.Value))
+-- end
+-- print(weaker..'/'..(#game.Players:GetChildren())-1)
 
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua"))()
+-- loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua"))()
