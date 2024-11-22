@@ -5,6 +5,7 @@ if not game:IsLoaded() then game.Loaded:Wait() end
 ---------------------------------------------------------
 game:GetService('Players').LocalPlayer.Idled:Connect(function() game:GetService('VirtualUser'):CaptureController() game:GetService('VirtualUser'):ClickButton2(Vector2.new()) end)
 local msgs = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/msgs.lua"))()
+local add = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/additional.lua"))()
 local seekforvillains = false
 _G.levels = {19, 25, 21, 21, 18}
 local players = game.Players
@@ -20,7 +21,7 @@ local toggleaura = function() remote:FireServer({"ConcealRevealAura"}) end
 local XI_RANK = RS:WaitForChild("RankEvents"):WaitForChild("Normal"):WaitForChild("XI")
 function TPto(pos) remote:FireServer({"Skill_Teleport", pos}) end
 function invis(state) remote:FireServer({"Skill_Invisible",state and "Start" or "Stop"}) end
-local function checknearplrs(dist) dist = dist or 500 for i,v in pairs(game.Players:GetChildren()) do if v~=player and v.Character and v.Character.HumanoidRootPart and math.floor((char.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).magnitude) <= 500 then return true end task.wait() end return false end
+local function checknearplrs(dist) dist = dist or 500 for i,v in pairs(game.Players:GetChildren()) do if v~=player and v.Character and v.Character.HumanoidRootPart and add.dist_to(v.Character.HumanoidRootPart.Position) <= 500 then return true end task.wait() end return false end
 if player.PrivateStats.Rank.Value > 11 then XI_RANK:FireServer() end toggleaura()
 task.spawn(function()
     while true do
@@ -42,7 +43,6 @@ task.spawn(function()
         end task.wait()
     end
 end)
-task.spawn(function() while task.wait() do remote:FireServer({"FinishMission",300000}) task.wait(0.000000000001) end end)
 msgs.Notify('AutoFarm', 'Loaded', 1)
 local function SA(player)
     local pos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
@@ -93,8 +93,8 @@ function checkingrep(player)
             if not seekforvillains then task.wait() return end
             if player.PrivateStats.Reputation.Value ~= lastrep and player.PrivateStats.Reputation.Value < 0 then
                 if not player.Character then return end
-                if math.floor((char.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).magnitude) < 5000 then task.wait(1); soulattack(player)
-                else while true do if math.floor((char.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).magnitude) < 5000 then task.wait(1); soulattack(player); break end task.wait(0.5) end end
+                if add.dist_to(player.Character.HumanoidRootPart.Position) < 5000 then task.wait(1); soulattack(player)
+                else while true do if add.dist_to(player.Character.HumanoidRootPart.Position) < 5000 then task.wait(1); soulattack(player); break end task.wait(0.5) end end
             end
         end
     end)
@@ -115,8 +115,11 @@ UserInputService.InputBegan:Connect(function(a,b)
     elseif a.KeyCode == Enum.KeyCode.F5 then loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/serverhop.lua"))() end
 end)
 -- task.spawn(function() while task.wait() do if shield then addshield:FireServer() end end end)
-msgs.Notify('Useful Binds', 'F1 - toggle watching\nF2 - Kill villians(PP)\nF3 - kill all(PP)')
-msgs.Notify('Misc Binds', 'F4 - ReJoin\nF5 - ServerHop')
+msgs.Notify('Main Binds', 'F1 - toggle watching\nF2 - Kill villians(PP)\nF3 - kill all(PP)')
+msgs.Notify('Misc Binds', 'F4 - ReJoin\nF5 - ServerHop', 5)
+
+task.spawn(function() while task.wait() do remote:FireServer({"FinishMission",300000}) task.wait(0.000000000001) end end)
+
 
 local convs = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/convs.lua"))()
 local weaker = 0
