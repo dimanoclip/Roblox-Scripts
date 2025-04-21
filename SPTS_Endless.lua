@@ -29,7 +29,7 @@ Events.JF = {"Add_JF_Request"}
 Events.Aura = {"ConcealRevealAura"}
 RunService.Stepped:Connect(function()
 	if TrainFS then game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvent"):FireServer(Events.FS) end
-    if TrainMSJF then
+	if TrainMSJF then
 		game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvent"):FireServer(Events.MS)
 		game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvent"):FireServer(Events.JF)
 	end
@@ -45,7 +45,7 @@ RunService.Stepped:Connect(function()
 		end
 	end
 	if RespawnAssist then
-   		if LP.Character:FindFirstChild("Humanoid") ~= nil and LP.Character.Humanoid.Health == 0 then
+		if LP.Character:FindFirstChild("Humanoid") ~= nil and LP.Character.Humanoid.Health == 0 then
 			game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvent"):FireServer(Events.Respawn)
 			task.wait(1)
 			game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvent"):FireServer(Events.Aura)
@@ -58,17 +58,17 @@ end)
 ---------------------------------------------------------
 UserInputService.InputBegan:Connect(function(a,b)
 	if a.KeyCode==Enum.KeyCode.F1 then TrainMSJF = not TrainMSJF
-	    if TrainMSJF then msg.Notify("Train JF+MS", "Enabled")
+		if TrainMSJF then msg.Notify("Train JF+MS", "Enabled")
 		else msg.Notify("Train JF+MS", "Disabled") end
 	elseif a.KeyCode==Enum.KeyCode.F2 then TrainFS = not TrainFS
-	    if TrainFS then msg.Notify("Train FS", "Enabled")
+		if TrainFS then msg.Notify("Train FS", "Enabled")
 		else msg.Notify("Train FS", "Disabled") end
 	elseif a.KeyCode==Enum.KeyCode.F3 then RespawnAssist = not RespawnAssist
 		if RespawnAssist and LP.Character:FindFirstChild("HumanoidRootPart") ~= nil then msg.Notify("Auto Respawn", "Enabled"); trainpos = LP.Character.HumanoidRootPart.CFrame
 		else msg.Notify("Auto Respawn", "Disabled"); trainpos = nil end
 	elseif a.KeyCode==Enum.KeyCode.F4 then AutoEquip.State = not AutoEquip.State
 		if AutoEquip.State then msg.Notify("AutoEquip", "Enabled")
-    	else msg.Notify("AutoEquip", "Disabled") end
+		else msg.Notify("AutoEquip", "Disabled") end
 	end
 end)
 UserInputService.InputBegan:Connect(function(a,b)
@@ -82,7 +82,7 @@ end)
 UserInputService.InputBegan:Connect(function(a,b)
 	if a.KeyCode==Enum.KeyCode.G then ClickTP = not ClickTP
 		if ClickTP then msg.Notify("ClickTP", "Enabled")
-    	else msg.Notify("ClickTP", "Disabled") end
+		else msg.Notify("ClickTP", "Disabled") end
 	elseif a.KeyCode==Enum.KeyCode.PageUp then
 		if ClickTP then LP.Character.HumanoidRootPart.CFrame = CFrame.new(LP.Character.HumanoidRootPart.CFrame.Position.x, LP.Character.HumanoidRootPart.CFrame.Position.y+200,LP.Character.HumanoidRootPart.CFrame.Position.z) end
 	elseif a.KeyCode==Enum.KeyCode.PageDown then
