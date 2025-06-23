@@ -459,3 +459,62 @@ Player.CharacterAdded:Connect(function(char)
 	AwakeningBug()
 	WearOutfit("Monarch")
 end)
+
+--[[-- setclipboard(("game.Players.LocalPlayer.Character.PrimaryPart.CFrame = CFrame.lookAt(Vector3.new(%s), Vector3.new(%s))"):format(tostring(game.Players.LocalPlayer.Character.PrimaryPart.Position), tostring(game.workspace.Spawns.Shinigami.Position)))
+-- setclipboard(string.format("game:GetService('TeleportService'):TeleportToPlaceInstance(%s, '%s', game.Players.LocalPlayer)", tostring(game.PlaceId), game.JobId))
+local add = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/additional.lua"))()
+local RP = game:GetService("ReplicatedStorage")
+local net = RP:WaitForChild("Modules"):WaitForChild("Net")
+local CombatEvent = net:WaitForChild("RE/CombatEvent")
+local Quest = net:WaitForChild("RE/Quest")
+local Ascend = net:WaitForChild("RE/Ascend")
+local Rebirth = net:WaitForChild("RE/Rebirth")
+local StoreClass = net:WaitForChild("RE/StoreClass")
+local SuperRebirth = net:WaitForChild("RE/SuperRebirth")
+local target = "Shinigami"
+local binds, waiting
+local function doing_rebirth(model)
+	-- print(add.dist_to(game.workspace.Spawns[target].Position))
+	local hum = model:WaitForChild("Humanoid")
+	Quest:FireServer("GetQuest", 33)
+	local start = os.clock()
+	hum.HealthChanged:Connect(function(health)
+		if health <= 0 then
+			local ending = os.clock()
+			-- print('dead', os.clock())
+			-- print(ending-start)
+		end
+	end)
+	CombatEvent:FireServer('LimitlessAttack3', model.PrimaryPart.Position)
+	Rebirth:FireServer()
+	SuperRebirth:FireServer()
+	-- print('rebirthed', os.clock())
+end
+local UserInputService=game:GetService("UserInputService")
+binds = UserInputService.InputBegan:Connect(function(a,b)
+	if a.KeyCode == Enum.KeyCode.F1 then
+		game.Players.LocalPlayer.Character.PrimaryPart.CFrame = game.workspace.DemonTeleporters.quest29.CFrame
+		Quest:FireServer("GetQuest", 29)
+		game.workspace.Spawns["Rock"]:WaitForChild("Rock"); task.wait(0.3)
+		CombatEvent:FireServer('LimitlessAttack3', game.workspace.Spawns["Rock"].Position); task.wait(2.5)
+		game.Players.LocalPlayer.Character.PrimaryPart.CFrame = game.workspace.DemonTeleporters.quest31.CFrame
+		Quest:FireServer("GetQuest", 31)
+		game.workspace.Spawns["Kayla"]:WaitForChild("Kayla"); task.wait(0.1)
+		CombatEvent:FireServer('LimitlessAttack5', game.workspace.Spawns["Kayla"].Position)
+	elseif a.KeyCode == Enum.KeyCode.F2 then
+		game.workspace.Spawns[target]:WaitForChild(target)
+		game.Players.LocalPlayer.Character.PrimaryPart.CFrame = CFrame.lookAt(Vector3.new(-2866.021240234375, 667.8728637695312, 104.55626678466797), Vector3.new(-3014.75, 665.3740234375, 111.3499984741211))
+		game.Players.LocalPlayer.Character.PrimaryPart.Velocity = Vector3.new(0,0,0)
+		task.wait(0.25)
+		game.Players.LocalPlayer.Character.PrimaryPart.Anchored = true
+		doing_rebirth(game.workspace.Spawns[target]:FindFirstChildOfClass("Model"))
+		game.Players.LocalPlayer.Character.PrimaryPart.Anchored = false
+	elseif a.KeyCode == Enum.KeyCode.F3 then
+		StoreClass:FireServer(1)
+	elseif a.KeyCode == Enum.KeyCode.F4 then
+		Ascend:FireServer()
+	elseif a.KeyCode == Enum.KeyCode.F5 then
+		binds:Disconnect()
+		waiting:Disconnect()
+	end
+end)]]--
