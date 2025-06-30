@@ -21,11 +21,9 @@ local lp = game.Players.LocalPlayer
 local char = lp.Character or lp.CharacterAdded:Wait() and lp.Character
 local mypp = char.PrimaryPart
 lp.CharacterAdded:Connect(function(character)
-    hlplayer(lp)
     char = character
     mypp = character.PrimaryPart
 end)
-hlplayer(lp)
 local net = workspace:WaitForChild("Map"):WaitForChild("BallNoCollide"):WaitForChild("Net")
 workspace.ChildAdded:Connect(function(child)
     if child.Name == "map" then
@@ -36,8 +34,6 @@ task.spawn(function()
     while true do
 		-- pcall(function() char:FindFirstChildOfClass('Highlight').OutlineColor = Color3.fromHSV(tick() % 7.5 / 7.5, 0.6, 0.6) end)
         -- pcall(function() char:FindFirstChildOfClass('Highlight').FillColor = Color3.fromHSV(tick() % 7.5 / 7.5, 0.6, 0.6) end)
-        pcall(function() workspace:FindFirstChild("BallShadowIndicator").SurfaceGui.Frame.UIStroke.Color = Color3.fromHSV(tick() % 7.5 / 7.5, 0.6, 0.6) end)
-        pcall(function() workspace:FindFirstChild("HitIndicator").Color = Color3.fromHSV(tick() % 7.5 / 7.5, 0.6, 0.6) end)
         -- local aim = workspace.Map.BallNoCollide.Positions["2"]["1"]
         -- closest = {aim, (aim.Position-mypp.Position).magnitude}
         if closest[1] then
@@ -57,7 +53,7 @@ task.spawn(function()
             local me_dist = math.floor((pp.Position-mypp.Position).magnitude)
             if hit_dist < closest[2] then
                 closest = {pp, hit_dist, me_dist}
-                print(v.Name)
+                -- print(v.Name)
                 if settargethl then settargethl:Destroy() end
                 settargethl = hlplayer(v, Color3.fromRGB(100,40,255), nil, 0.5)
             end
@@ -68,7 +64,7 @@ task.spawn(function()
 end)
 local interact = game:GetService("ReplicatedStorage"):WaitForChild("Packages")._Index["sleitnick_knit@1.7.0"].knit.Services.BallService.RF.Interact
 -- local hitbox = game:GetService("ReplicatedStorage"):WaitForChild("Packages")._Index["sleitnick_knit@1.7.0"].knit.Services.BallService.RF.CreateHitbox
-local x, setid
+local x
 x = hookmetamethod(game, "__namecall", function(self, ...)
     local args = {...}
     if self == interact and args[1]["Action"] == "JumpSet" then
@@ -86,12 +82,11 @@ x = hookmetamethod(game, "__namecall", function(self, ...)
             ["SpecialCharge"] = 1,
             ["TiltDirection"] = tilt,
             ["BallId"] = args[1]["BallId"],
-            ["MoveDirection"] = tilt,
+            ["MoveDirection"] = args[1]["MoveDirection"],
             ["From"] = args[1]["From"],
             ["HitboxSize"] = args[1]["HitboxSize"],
             ["LookVector"] = args[1]["LookVector"]
         })
-    elseif self == interact and args["Action"] == "Set" and args[1]["Key"] == setid and args[1]["SpecialCharge"] ~= 1 then return
     end
     return x(self, ...)
 end)
