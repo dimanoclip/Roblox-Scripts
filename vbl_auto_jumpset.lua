@@ -77,9 +77,9 @@ x = hookmetamethod(game, "__namecall", function(self, ...)
             else tilt = (cf.Position-ball.PrimaryPart.Position).Unit or tilt end
         end
         return x(self, {
-            ["Charge"] = 1,
+            ["Charge"] = args[1]["Charge"],
             ["Action"] = args[1]["Action"],
-            ["SpecialCharge"] = 1,
+            ["SpecialCharge"] = args[1]["SpecialCharge"],
             ["TiltDirection"] = tilt,
             ["BallId"] = args[1]["BallId"],
             ["MoveDirection"] = args[1]["MoveDirection"],
