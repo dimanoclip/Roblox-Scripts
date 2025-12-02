@@ -40,10 +40,53 @@ if volleyball_ids[tostring(game.PlaceId)] then
     while not lp:GetAttribute("User_Level") do task.wait() end
     task.wait(0.5)
     game.StarterGui:SetCore("ChatActive", false)
+    -- Variables
     local Styles = RP.Content.Style
     local Abilities = RP.Content.Ability
     local Rarities = require(RP.Content.Rarity)
-    local ball
+    local closest = {nil, 1e99}
+    local lastserver, antishiftlock, superhitbox, targethl, setter_mode, ball
+    local services = RP:WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.7.0"):WaitForChild("knit"):WaitForChild("Services")
+    -- Misc
+    local toggle_advs = services.GameService.RF.ToggleAdvancedMoves
+    local jersey = services.JerseyService.RF.RequestJerseyUpdate
+    local settings = services.SettingsService.RF.ChangeSetting
+    local keybind = services.SettingsService.RF.UpdateKeybind
+    -- Hooks
+    local serve = services.GameService.RF.Serve
+    local interact = services.BallService.RF.Interact
+    local ping = services.EngineSchedulerService.RF.Ping
+    local hitbox = services.BallService.RF.CreateHitbox
+    -- Binds
+    local claim_rewards = services.LevelService.RF.ClaimLevelRewards
+    local request_teleport = services.PartyService.RF.RequestTeleport
+    local return_to_lobby = services.GameService.RF.ReturnPartyToLobby
+    -- Chat Commands
+    local callbacks = {
+        ["2v2"] = function() request_teleport:InvokeServer("Twos") end,
+        ["requeue"] = function() return_to_lobby:InvokeServer(true) end,
+        ["return"] = function() return_to_lobby:InvokeServer(false) end,
+        ["setter mode"] = function() setter_mode = not setter_mode; if targethl then targethl:Destroy() end end
+    }
+    local commands = {
+        ["!2s"] = callbacks["2v2"],
+        ["!2"] = callbacks["2v2"],
+        ["!req"] = callbacks["requeue"],
+        ["req?"] = callbacks["requeue"],
+        ["again?"] = callbacks["requeue"],
+        ["!re"] = callbacks["requeue"],
+        ["!back"] = callbacks["return"],
+        ["gg"] = callbacks["return"],
+        ["wp"] = callbacks["return"],
+        ["!lobby"] = callbacks["return"],
+        ["!hub"] = callbacks["return"],
+        ["i set"] = callbacks["setter mode"],
+        ["you set"] = callbacks["setter mode"],
+        ["are you a setter?"] = callbacks["setter mode"],
+    }
+    -- Functions
+    local function getlvl() return tonumber(lp:GetAttribute("User_Level")) end
+    local function enableadvmoves() local text = pgui:WaitForChild("Interface"):WaitForChild("TeamSelection"):WaitForChild("Options"):WaitForChild("AdvancedMoves"):WaitForChild("Text"); if text.Text:find("OFF") then toggle_advs:InvokeServer() end end
     local function getball()
         for i,v in pairs(workspace:GetChildren()) do
             if v.Name:find("CLIENT_BALL") then return v end
@@ -55,7 +98,6 @@ if volleyball_ids[tostring(game.PlaceId)] then
         return getball():GetAttribute("Id")
     end
     local function rotate_to_cam()
-        local char = lp.Character
         local hum = char.Humanoid
         local prim = char.PrimaryPart
         local c1 = prim.CFrame
@@ -75,7 +117,7 @@ if volleyball_ids[tostring(game.PlaceId)] then
         local style = get_style(ply)
         local style_module = Styles:FindFirstChild(style)
         if not style_module then return end
-        local style_module = require(style_module)
+        style_module = require(style_module)
         return {style_module.DisplayName, Rarities.Data[style_module.Rarity].Name}
     end
     local function get_ability(ply)
@@ -92,8 +134,7 @@ if volleyball_ids[tostring(game.PlaceId)] then
         return charge >= max
     end
     local function update_hitbox(size, color)
-        local ball, hitbox
-        ball = getball()
+        local hitbox
         color = color or Color3.fromRGB(180, 0, 255)
         if ball then
             hitbox = ball:FindFirstChild("HitBox")
@@ -122,7 +163,7 @@ if volleyball_ids[tostring(game.PlaceId)] then
             if not workspace:FindFirstChild("lines") then Instance.new("Folder", workspace).Name = "lines" end
             local linesfold = workspace:FindFirstChild("lines")
             if not player:GetAttribute("Gameplay_TiltDirection") then return end
-            local char = player.Character
+            local character = player.Character
             if not char:FindFirstChild("Head") or not char:FindFirstChild("HumanoidRootPart") then return end
             local head = char.Head
             local hrp = char.PrimaryPart
@@ -138,7 +179,7 @@ if volleyball_ids[tostring(game.PlaceId)] then
                 if teamcheck(player) then
                     part.Transparency = 0
                     part.CFrame = CFrame.new(mid, destination)
-                else 
+                else
                     part.Transparency = 1
                 end
             else
@@ -159,6 +200,11 @@ if volleyball_ids[tostring(game.PlaceId)] then
             end
         end
     end
+    if getlvl() < 5 then waitinglvl5 = true else enableadvmoves() end
+    -- Main code
+    local recieves = {["Dive"] = true, ["Bump"] = true, ["Set"] = true, ["JumpSet"] = true}
+    local attack = {["Spike"] = true}
+    -- Events
     pls.PlayerAdded:Connect(function(ply)
         ply:SetAttribute("LineColor", Color3.fromRGB(255,255,255))
     end)
@@ -169,45 +215,6 @@ if volleyball_ids[tostring(game.PlaceId)] then
             end
         end
     end)
-    local closest = {nil, 1e99}
-    local lastserver, antishiftlock, superhitbox, targethl, setter_mode
-    local services = RP:WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.7.0"):WaitForChild("knit"):WaitForChild("Services")
-    -- Misc
-    local jersey = services.JerseyService.RF.RequestJerseyUpdate
-    local settings = services.SettingsService.RF.ChangeSetting
-    local keybind = services.SettingsService.RF.UpdateKeybind
-    -- Hooks
-    local serve = services.GameService.RF.Serve
-    local interact = services.BallService.RF.Interact
-    local ping = services.EngineSchedulerService.RF.Ping
-    local hitbox = services.BallService.RF.CreateHitbox
-    -- Binds
-    local claim_rewards = services.LevelService.RF.ClaimLevelRewards
-    local request_teleport = services.PartyService.RF.RequestTeleport
-    local return_to_lobby = services.GameService.RF.ReturnPartyToLobby
-    -- Code
-    local function getlvl() return tonumber(lp:GetAttribute("User_Level")) end
-    local function enableadvmoves() local text = pgui:WaitForChild("Interface"):WaitForChild("TeamSelection"):WaitForChild("Options"):WaitForChild("AdvancedMoves"):WaitForChild("Text"); if text.Text:find("OFF") then services.GameService.RF.ToggleAdvancedMoves:InvokeServer() end end
-    if getlvl() < 5 then waitinglvl5 = true else enableadvmoves() end
-    local function hlplayer(ply, fillcolor, outlinecolor, transparency)
-        if ply.Character:FindFirstChild("U_Highlight") then return end
-        fillcolor = fillcolor or Color3.fromRGB(0,0,0)
-        outlinecolor = outlinecolor or Color3.fromRGB(255,255,255)
-        transparency = transparency or 0
-        local hl = Instance.new("Highlight")
-        hl.Name = "U_Highlight"
-        hl.Parent = ply.Character
-        hl.FillColor = fillcolor
-        hl.OutlineColor = outlinecolor
-        hl.DepthMode = Enum.HighlightDepthMode.Occluded
-        hl.FillTransparency = transparency
-        return hl
-    end
-    local function unhlplayer(ply)
-            ply.Character:FindFirstChild("U_Highlight"):Remove()
-    end
-    local recieves = {["Dive"] = true, ["Bump"] = true, ["Set"] = true, ["JumpSet"] = true}
-    local attack = {["Spike"] = true}
     RP.AttributeChanged:Connect(function(attr)
         if attr == "IsBallInPlay" then
             antishiftlock = RP:GetAttribute("IsBallInPlay")
@@ -256,6 +263,40 @@ if volleyball_ids[tostring(game.PlaceId)] then
             end)
         end
     end)
+    UIS.InputBegan:Connect(function(a,b)
+        if a.KeyCode == Enum.KeyCode.Space and not b then
+            pcall(function()
+                if lp.Character.Humanoid.FloorMaterial ~= Enum.Material.Air and MouseLockController:GetIsMouseLocked()  then
+                    local c1 = lp.Character.PrimaryPart.CFrame
+                    local last_height = c1.Position.Y
+                    rotate_to_cam()
+                    repeat task.wait() until c1.Position.Y < last_height
+                end
+            end)
+        elseif a.KeyCode == Enum.KeyCode.LeftControl and not b then
+            superhitbox = false
+        end
+        if a.KeyCode == Enum.KeyCode.F1 then
+            claim_rewards:InvokeServer()
+        elseif a.KeyCode == Enum.KeyCode.F2 then
+            setter_mode = not setter_mode
+            msg.Chat(string.format("Setter mode was toggled (%s)", setter_mode and "Enabled" or "Disabled"), "Blue")
+            if targethl then targethl:Destroy() end
+        elseif a.KeyCode == Enum.KeyCode.F3 then
+            request_teleport:InvokeServer("Twos")
+        elseif a.KeyCode == Enum.KeyCode.F4 then
+            return_to_lobby:InvokeServer(true)
+        elseif a.KeyCode == Enum.KeyCode.F5 then
+            return_to_lobby:InvokeServer(false)
+        end
+    end)
+    lp.Chatted:Connect(function(message, target)
+        if target then return end
+        if commands[message] then commands[message]()
+        else game.StarterGui:SetCore("ChatActive", false)
+        end
+    end)
+    -- Game Settings
     settings:InvokeServer("Music", false)
     settings:InvokeServer("Haptics", false)
     settings:InvokeServer("RarityCutscene", false)
@@ -263,6 +304,7 @@ if volleyball_ids[tostring(game.PlaceId)] then
     settings:InvokeServer("BubbleChat", false)
     keybind:InvokeServer("E", true, "Block")
     keybind:InvokeServer("Q", true, "JumpSet")
+    -- hookmetamethod
     task.spawn(function()
         if hookmetamethod then
             task.wait(2)
@@ -322,6 +364,7 @@ if volleyball_ids[tostring(game.PlaceId)] then
             end)
         end
     end)
+    -- Loop #1 (Ball Hitbox)
     task.spawn(function()
         while game:GetService("RunService").RenderStepped:Wait() do
             if lp.Character:FindFirstChild("Humanoid") then
@@ -336,6 +379,7 @@ if volleyball_ids[tostring(game.PlaceId)] then
             end
         end
     end)
+    -- Loop #2 (Players' lines)
     task.spawn(function()
         while game:GetService("RunService").RenderStepped:Wait() do
             for i,v in pairs(pls:GetChildren()) do
@@ -347,64 +391,12 @@ if volleyball_ids[tostring(game.PlaceId)] then
                 if hit_dist < closest[2] then
                     closest = {pp, hit_dist}
                     if targethl then targethl:Destroy() end
-                    targethl = hlplayer(v, Color3.fromRGB(100,40,255), nil, 0.5)
+                    targethl = add.hlplayer(v, Color3.fromRGB(100,40,255), nil, 0.5)
                 end
             end
         end
     end)
-    UIS.InputBegan:Connect(function(a,b)
-        if a.KeyCode == Enum.KeyCode.Space and not b then
-            pcall(function()
-                if lp.Character.Humanoid.FloorMaterial ~= Enum.Material.Air and MouseLockController:GetIsMouseLocked()  then
-                    local c1 = lp.Character.PrimaryPart.CFrame
-                    local last_height = c1.Position.Y
-                    rotate_to_cam()
-                    repeat task.wait() until c1.Position.Y < last_height
-                end
-            end)
-        elseif a.KeyCode == Enum.KeyCode.LeftControl and not b then
-            superhitbox = false
-        end
-        if a.KeyCode == Enum.KeyCode.F1 then
-            claim_rewards:InvokeServer()
-        elseif a.KeyCode == Enum.KeyCode.F2 then
-            setter_mode = not setter_mode
-            msg.Chat(string.format("Setter mode was toggled (%s)", setter_mode and "Enabled" or "Disabled"), "Blue")
-            if targethl then targethl:Destroy() end
-        elseif a.KeyCode == Enum.KeyCode.F3 then
-            request_teleport:InvokeServer("Twos")
-        elseif a.KeyCode == Enum.KeyCode.F4 then
-            return_to_lobby:InvokeServer(true)
-        elseif a.KeyCode == Enum.KeyCode.F5 then
-            return_to_lobby:InvokeServer(false)
-        end
-    end)
-    local commands = {
-        ["!2v2"] = {name="requeue", callback=function() request_teleport:InvokeServer("Twos") end},
-        ["!requeue"] = {name="requeue", callback=function() return_to_lobby:InvokeServer(true) end},
-        ["!return"] = {name="requeue", callback=function() return_to_lobby:InvokeServer(false) end},
-        -- ["!r"] = {name="requeue", callback=function() return_to_lobby:InvokeServer(true) end},
-    }
-    local aliases = {
-        ["!2s"] = commands["!2v2"],
-        ["!2"] = commands["!2v2"],
-        ["!req"] = commands["!requeue"],
-        ["req?"] = commands["!requeue"],
-        ["again?"] = commands["!requeue"],
-        ["!re"] = commands["!requeue"],
-        ["!back"] = commands["!return"],
-        ["gg"] = commands["!return"],
-        ["wp"] = commands["!return"],
-        ["!lobby"] = commands["!return"],
-        ["!hub"] = commands["!return"],
-    }
-    lp.Chatted:Connect(function(message, target)
-        print(message)
-        if commands[message] then commands[message].callback()
-        elseif aliases[message] then aliases[message].callback()
-        else game.StarterGui:SetCore("ChatActive", false)
-        end
-    end)
+    -- Loop #3 (Color corrections, etc.)
     task.spawn(function()
         while true do task.wait(0.5)
             if waitinglvl5 then
