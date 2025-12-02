@@ -7,7 +7,6 @@ lp.CharacterAdded:Connect(function(character)
     char = character
     mypp = character.PrimaryPart
 end)
-local function getping() return lp:GetNetworkPing()*2000 end
 local CurCam = workspace.CurrentCamera
 while not lp do task.wait() lp = game.Players.LocalPlayer end
 task.wait(1)
@@ -15,7 +14,7 @@ local add = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanonam
 local msg = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/msgs.lua"))()
 local vinp = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/vinp.lua"))()
 local PlayerModule = lp.PlayerScripts:WaitForChild("PlayerModule")
-local cameras, MouseLockController
+local Cameras, MouseLockController
 if hookmetamethod then
     Cameras = require(PlayerModule):GetCameras()
     MouseLockController = Cameras.activeMouseLockController
@@ -368,7 +367,7 @@ if volleyball_ids[tostring(game.PlaceId)] then
     task.spawn(function()
         while game:GetService("RunService").RenderStepped:Wait() do
             if lp.Character:FindFirstChild("Humanoid") then
-                update_hitbox((superhitbox and 5 or is_midair() and 2 or 1.7)+(math.floor((getping()-50)/50)))
+                update_hitbox((superhitbox and 5 or is_midair() and 2 or 1.7)+(math.floor((add.getping()-50)/50)))
             end
             if hookmetamethod and antishiftlock then UserSettings():GetService("UserGameSettings").RotationType = Enum.RotationType.MovementRelative end
             if closest[1] and setter_mode then
