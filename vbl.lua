@@ -414,4 +414,4 @@ if volleyball_ids[tostring(game.PlaceId)] then
 end
 print("Finished!")
 if _G.ReExec then return end
-_G.ReExec = true; queue_on_teleport("print('Loading my OP superpowers😎'); loadstring(readfile('misc.lua'))(); _G.ReExec = false")
+_G.ReExec = true; queue_on_teleport("loadstring(readfile('misc.lua'))(); _G.ReExec = false")
