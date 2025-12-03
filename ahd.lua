@@ -7,7 +7,7 @@ local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinl
 local SettingsLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/Suricato006/Scripts-Made-by-me/master/Libraries/SaveSettingsLibrary.lua"))()
 local InputLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/Suricato006/Scripts-Made-by-me/master/Libraries/InputFunctions%20Library.lua"))()
 local msg = loadstring(game:HttpGet("https://raw.githubusercontent.com/dimanoclip/Roblox-Luas/refs/heads/main/Libs/msgs.lua"))()
-local convs = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/convs.lua"))()
+local convs = loadstring(game:HttpGet("https://raw.githubusercontent.com/dimanoclip/Roblox-Luas/main/Libs/convs.lua"))()
 msg.Notify("Welcome", "Thank you for using my script.\nGood luck and have fun!", 5)
 local Players = game.Players
 local Player = Players.LocalPlayer
@@ -353,8 +353,8 @@ if SettingsTable.AutoHealthValue then HealthValue:SetText(tostring(SettingsTable
 if SettingsTable.AutoFormValue then formValue:SetText(tostring(SettingsTable.AutoFormValue)) end
 
 Misc.Label({Text = "General",})
-Misc.Button({Text = "ReJoin", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/rejoin.lua"))() end})
-Misc.Button({Text = "ServerHop", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/serverhop.lua"))() end})
+Misc.Button({Text = "ReJoin", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/dimanoclip/Roblox-Luas/main/rejoin.lua"))() end})
+Misc.Button({Text = "ServerHop", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/dimanoclip/Roblox-Luas/main/serverhop.lua"))() end})
 
 game:GetService("RunService").Stepped:Connect(function()
 	WearOutfit("Monarch")
@@ -462,7 +462,7 @@ end)
 
 --[[-- setclipboard(("game.Players.LocalPlayer.Character.PrimaryPart.CFrame = CFrame.lookAt(Vector3.new(%s), Vector3.new(%s))"):format(tostring(game.Players.LocalPlayer.Character.PrimaryPart.Position), tostring(game.workspace.Spawns.Shinigami.Position)))
 -- setclipboard(string.format("game:GetService('TeleportService'):TeleportToPlaceInstance(%s, '%s', game.Players.LocalPlayer)", tostring(game.PlaceId), game.JobId))
-local add = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/additional.lua"))()
+local add = loadstring(game:HttpGet("https://raw.githubusercontent.com/dimanoclip/Roblox-Luas/main/Libs/additional.lua"))()
 local RP = game:GetService("ReplicatedStorage")
 local net = RP:WaitForChild("Modules"):WaitForChild("Net")
 local CombatEvent = net:WaitForChild("RE/CombatEvent")

@@ -1,5 +1,5 @@
-local inp = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/vinp.lua"))()
-local add = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/additional.lua"))()
+local inp = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/dimanoclip/Roblox-Luas/main/Libs/vinp.lua"))()
+local add = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/dimanoclip/Roblox-Luas/main/Libs/additional.lua"))()
 local key = inp.PressKey
 local plys = game.Players
 local lp = plys.LocalPlayer
@@ -93,6 +93,6 @@ spawn(function()
         end
     end)
 end)
-queue_on_teleport('loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Dimanoname/Roblox-Scripts/main/dungquest.lua"))()')
+queue_on_teleport('loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/dimanoclip/Roblox-Scripts/main/dungquest.lua"))()')
 print(string.rep("\nEverything loaded", 5))
 print(string.format("\nTriggers are:\n%s for others,\n%s for self\n", table.concat(triggers["others"], ", "), table.concat(triggers["self"], ", ")))

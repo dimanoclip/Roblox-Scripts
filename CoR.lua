@@ -2,7 +2,7 @@
 local PlaceId = 11634325399
 if game.PlaceId ~= PlaceId then warn(string.format("Wrong game detected. %s expected, got %s", PlaceId, game.PlaceId)) return end
 -- Some Features
-local conv = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/1/main/convs.lua"))()
+local conv = loadstring(game:HttpGet("https://raw.githubusercontent.com/dimanoclip/1/main/convs.lua"))()
 game.Players.LocalPlayer.Idled:connect(function() game:GetService("VirtualUser"):CaptureController(); game:GetService("VirtualUser"):ClickButton2(Vector2.new()) end)
 while true do task.wait(0.5)
 game.Players.LocalPlayer.Character:FindFirstChild("UpperTorso"):FindFirstChild("BillboardGui").TextLabel.Text = conv.ToLetters(game.Players.LocalPlayer.leaderstats.Level.Value)

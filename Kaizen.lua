@@ -1,4 +1,4 @@
-local add = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dimanoname/Roblox-Luas/main/Libs/additional.lua"))()
+local add = loadstring(game:HttpGet("https://raw.githubusercontent.com/dimanoclip/Roblox-Luas/main/Libs/additional.lua"))()
 local lp = game.Players.LocalPlayer
 local rs = game:GetService("ReplicatedStorage")
 local cancelquest = rs.Knit.Services.questService.RE.CancelCurrentQuest
